@@ -1,0 +1,336 @@
+
+*{
+    font-family:'GothamRoundedBook';
+}
+@font-face {
+    font-family: 'GothamRoundedLight';
+    src:url('../css/font-awesome/fonts/gothamrnd-light.eot');
+    src:url('../css/font-awesome/fonts/gothamrnd-light.eot') format('embedded-opentype'),
+        url('../css/font-awesome/fonts/gothamrnd-light.woff') format('woff'),
+        url('../css/font-awesome/fonts/gothamrnd-light.ttf') format('truetype'),
+        url('../css/font-awesome/fonts/gothamrnd-light.svg#GothamRoundedLight') format('svg');}
+@font-face {
+    font-family: 'GothamRoundedBold';
+    src: url('../css/font-awesome/fonts/gothamrnd-bold.eot');
+    src: url('../css/font-awesome/fonts/gothamrnd-bold.eot') format('embedded-opentype'),
+        url('../css/font-awesome/fonts/gothamrnd-bold.woff') format('woff'),
+        url('../css/font-awesome/fonts/gothamrnd-bold.ttf') format('truetype'),
+        url('../css/font-awesome/fonts/gothamrnd-bold.svg#GothamRoundedBold') format('svg');}
+@font-face {
+    font-family: 'GothamRoundedBook';
+    src: url('../css/font-awesome/fonts/gothamrnd-book.eot');
+    src: url('../css/font-awesome/fonts/gothamrnd-book.eot') format('embedded-opentype'),
+        url('../css/font-awesome/fonts/gothamrnd-book.woff') format('woff'),
+        url('../css/font-awesome/fonts/gothamrnd-book.ttf') format('truetype'),
+        url('../css/font-awesome/fonts/gothamrnd-book.svg#GothamRoundedBook') format('svg');}
+@font-face {
+    font-family: 'GothamRoundedMedium';
+    src: url('../css/font-awesome/fonts/gothamrnd-medium.eot');
+    src: url('../css/font-awesome/fonts/gothamrnd-medium.eot') format('embedded-opentype'),
+        url('../css/font-awesome/fonts/gothamrnd-medium.woff') format('woff'),
+        url('../css/font-awesome/fonts/gothamrnd-medium.ttf') format('truetype'),
+        url('../css/font-awesome/fonts/gothamrnd-medium.svg#GothamRoundedMedium') format('svg');}
+
+/*********************edition des entetes******************/
+
+/*********************edition du corps***********************/
+.imglogo{
+    width: 9%;
+    margin-top: 0%;
+    margin-left: 4.5%;
+    margin-right: 38%;
+    }
+.imglogo3{
+    width: 4%;
+    margin-top: 0%;
+    margin-left: 40%;
+    }
+.imglogo4{
+    
+    position: relative;
+    display: block;
+    margin: auto;
+    width: 50%;
+    height: 30px;
+    opacity: 0.6;
+    }
+.imglogo5{
+    position: relative;
+    margin: auto;
+    display: block;
+    width: 30%;
+    height: 30px;
+    opacity: 0.6;
+    }
+.text_logo{
+    margin-left: 4.5%;
+    font-size: 10px;
+    position: absolute;
+    left: 30px;
+    top: 120px;
+}
+.imgacceuil/*edition image de l'acceuil*/{
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    height: 50%;
+    display: block;}
+/********************edition du message*****************************/
+.msacceuil{
+    text-align:center;}
+/********************edition des bouttons***************************/
+.bsouscription {/*edition du boutton validation*/
+    display: inline-block;
+    border-radius: 10px;
+    box-shadow: 6px black;
+    color: white;
+    background-color: #be1d2e;
+    font-size: 30px;
+    position: relative;
+    margin: 10px auto;
+    }
+.bsouscription:hover {
+    border-radius: 10px;
+    box-shadow: 6px black;
+    color: white;
+    background-color: #21301a;
+    font-size: 35px;}
+
+.icon-barbtn{
+    display: inline-block;
+    background-color: #21301A;
+    color: white;
+    margin: 10px 0 10px 0;
+    padding: 10px;
+    width: fit-content;
+    font-size: 16px;
+    border: none;
+}
+.arrow {
+    border: solid black;
+    border-width: 0 1px 1px 0;
+    display: inline-block;
+    padding: 3px;
+    margin: 0;
+  }
+  
+.left {
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
+  }
+/**********************edition du formulaire**********************/
+.titre_demande h1{
+    /*text-decoration: underline;*/
+    /*font-style: italic;*/
+    font-weight:bold;
+    font-size: 1rem;
+    text-shadow: 0 0 black;
+    text-align: center;
+    margin-bottom: 2rem;
+    margin-top: 3rem;}
+.doctitre{
+    font-size: 0.8rem;    
+    background-color: #be1d2e;
+    color:#ffffff;
+    }
+.doctitre2 {
+    font-size: 0.8rem;
+    background-color: #21301a;
+    color: #ffffff;
+}
+.text_gras{
+    font-weight: bolder;
+}
+.espacement_cellule{
+    padding-left: 150px
+}
+.prime{
+    font-weight:bold;
+    font-size: larger;
+    color: #be1d2e;}
+/*information bas de page*/
+.contacts{
+    display: table;
+    text-align: center;
+    width: 100%;
+    margin-top: 6rem;
+    } 
+.contacts span{
+    font-size: 0.4rem;
+    display: table-cell;
+    vertical-align:middle;}
+
+.notes{
+    text-align: left;
+    font-size: 0.61rem;
+    /* color: #be1d2e; */
+}
+.gras{
+    font-size: 0.7rem;
+    font-weight: bold;
+}
+.date{
+    text-align: right;}
+.masqueur{
+    float: right;
+}
+.message{
+    display: block;
+    margin: auto;
+    width: auto;
+    padding: 10px;
+    margin: 0px auto;
+    border-radius: 5px;
+    text-align: center;
+}
+.bar{
+    color: #ffffff;
+    width: 90%;
+    padding: 10px;
+    margin: 0px auto;
+    border-radius: 5px;
+    text-align: center;
+    background-color: #be1d2e;
+}
+.espace_bas{
+    padding-bottom: 39px;
+}
+/********************edition du bareme*****************/
+.bareme{
+    margin: auto;
+    /* width: 790px; */
+    border: 1px solid rgb(246, 204, 204);
+    border-collapse: collapse;
+}
+.prod_cat {
+    color: #ffffff;
+    font-weight: bold;
+    background-color: #be1d2e;
+}
+.prod_titre {
+    color: #ffffff;
+    background-color: #21301a;
+}
+.cssformcol1{
+    width: 62.5%;
+}
+.cssformcol2{
+    width: 37.5%;
+}
+.cssborder{
+    border: 0.5px solid #92929240;
+}
+
+/********************form des champs de saisie*****************/
+.zoneform{
+    margin-bottom: 0px;
+    background-color: #ffffff;
+    min-height: 1050px;
+    width: fit-content;
+}
+.cssform2 label, .cssform2 input,.cssform2 select {
+    display: table-cell;
+    margin-bottom: 10px;}  
+.cssform2 label {
+    width: 155px;
+    padding-right: 1%;
+    text-align: left;}  
+.cssform2 input [type=text] {
+    width: 300px;}
+#total{
+    width: 60px;}
+.zoneplaf{
+    margin-left: 80px;}
+/********************form des zones text saisie*****************/
+.cssform{
+    margin: auto;
+    width: 780px;
+    text-align: justify;
+}
+.cssform2{
+    margin-left: 10px;
+    text-align: justify;
+}
+.cssform2 p{
+    margin: 0;
+}
+.cssform3_1{
+    text-align: center;
+    margin-top: 50px;
+}
+.cssform3_2{
+    text-align: end;
+    margin-top: 25px;
+}
+.cssform4{
+    display: flex;
+    justify-content: space-around;
+    margin-top: 15px;
+}
+.cssform4_1{
+    display: flex;
+    font-size: 2px;
+    padding: 0;
+}
+.cssform4_1_1{
+    flex:1;
+    font-size: 0.6rem;
+    text-align: justify;
+    /* margin-right: 11px; */
+}
+.cssform4_1_2{
+    font-size: 0.6rem;
+    margin-left: 10px;
+}
+
+/*****************************edition des champs de resultat***************************/
+.imglogo2{
+    display: fixed;
+    width: 10%;}
+.resultetable,.zoneform{
+    margin: auto;
+}
+.resultetable{
+    border: 1px solid #21301a;
+    border-collapse: collapse;
+    width:auto;
+    height:auto;  
+}
+.resultetable tr, .resultetable td ,.resultetable th{
+    border: 1px solid  #be1d2e;
+    height:auto;  
+}
+p{
+    /* margin: 17px; */
+    margin-bottom: 0 !important;
+}
+.documenttab p{
+    margin: 10px;
+    }
+.resultetable tr:nth-child(even){background-color: #ffffff;}
+.resultetable tr:hover {background-color: #21301ac4; color: #ffffff;}
+.resultetable th{
+    background-color: #be1d2e;
+    color: #ffffff;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: center;
+}
+.documenttab, .documenttab th,.documenttab td {
+    /*border: 1px solid rgb(0, 0, 0);*/
+    width: 740px;
+    margin: auto;
+    vertical-align: top;
+    border-collapse: collapse;
+  }
+/*.documenttab th, .documenttab td {
+    padding: 0px;
+}
+.documenttab th {
+    text-align: left;
+}*/
+.documenttab {border-spacing: 5px;/* margin-left: 3rem; */}
+.documenttabfont {font-size: 0.81rem;}
+
+
+

@@ -1,0 +1,34 @@
+:root {
+    --sw-border-color: #eeeeee;
+    --sw-toolbar-btn-color: #ffffff;
+    --sw-toolbar-btn-background-color: #00a650;
+    --sw-anchor-default-primary-color: #ffffff;
+    --sw-anchor-default-secondary-color: #be1d2d;
+    --sw-anchor-active-primary-color: #348409;
+    --sw-anchor-active-secondary-color: #ffffff;
+    --sw-anchor-done-primary-color: #be1d2d;
+    --sw-anchor-done-secondary-color: #fefefe;
+    --sw-anchor-disabled-primary-color: #f8f9fa;
+    --sw-anchor-disabled-secondary-color: #dbe0e5;
+    --sw-anchor-error-primary-color: #dc3545;
+    --sw-anchor-error-secondary-color: #ffffff;
+    --sw-anchor-warning-primary-color: #ffffff;
+    --sw-anchor-warning-secondary-color: #ffffff;
+    --sw-progress-color: #00a650;
+    --sw-progress-background-color: #f8f9fa;
+    --sw-loader-color: #1f612a;
+    --sw-loader-background-color: #f8f9fa;
+    --sw-loader-background-wrapper-color: #ffffff;
+}
+
+
+.mb-3 {
+margin-bottom: 1.6rem !important;
+}
+.mb-9 {
+margin-bottom: 5rem !important;
+}
+
+.mt-9 {
+margin-top: 3rem !important;
+}

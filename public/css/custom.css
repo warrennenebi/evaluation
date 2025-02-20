@@ -1,0 +1,189 @@
+/* turn cursor on pointer on i tag */
+i{
+    cursor: pointer;
+}
+/* custom table colone width */
+.w-td-220{
+    width: 220px !important;
+}
+.w-td-180{
+    width: 180px !important;
+}
+.select_cotation
+{
+    min-width: 150px !important;
+}
+
+.select_cotation2
+{
+    min-width: 250px !important;
+}
+/* red label custom color */
+label{
+    color: #BE1D2E;
+}
+
+/* table responsive without x-overflow */
+.table-responsive::-webkit-scrollbar,.navigation_bar2::-webkit-scrollbar{
+    display: none;
+}
+.table-responsive,.navigation_bar2{
+    /* height: 200px;
+    overflow-x:hidden;*/
+    /* for Internet Explorer, Edge */
+    -ms-overflow-style: none; 
+    /* for Firefox */
+    scrollbar-width: none; 
+    overflow-x: scroll; 
+} 
+.table-responsive dataTables_wrapper{
+    overflow-x:auto;
+}
+/* Chrome, Safari, Edge, Opera  masquage des fleches de champ nombre*/
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}
+/* custom card box shadow */
+.card {
+    box-shadow: 0 0 0.875rem 0 rgba(33,37,41,.05);
+    margin-bottom: 2rem;
+}
+/* fex row col form control like */
+.tf-control{
+    background-color: #f2f1f8;
+    padding: .30rem 0.4rem;
+    background-clip: border-box;
+    border-radius: .25rem;
+    margin-left: .25rem !important;
+    margin-right: .25rem !important;
+}
+/* sticky header */
+/* #PageContent {
+    position: relative;
+} */
+#TableauCotationBatiment input[type="text"], #TableauCotationVehicule input[type="text"]{
+    border-top:none;
+    border-left:none;
+    border-right:none;
+
+    width: 100%; 
+    box-sizing: border-box; 
+}
+th {
+    /* position: sticky;
+    top: 0; */
+    background-color: #BE1D2E !important;
+    color: white !important;
+}
+/* td cell ellipsis */
+.td_ellipsis
+{
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* 
+Le Style pour les Input dans les Tableaux
+*/
+.table-cell {
+    width: 15px; 
+
+}
+
+input[type="text"]:focus{
+    outline:0 !important;
+    outline:0 --webkit-focus-ring-color !important;
+}
+
+/* .f-grow-9{
+    flex-grow: 9;
+    flex-shrink: 1;
+    flex-basis: 0%;
+} */
+
+.dropdown:hover>.dropdown-menu {
+display: block;
+}
+
+.dropdown>.dropdown-toggle:active {
+/*Without this, clicking will make it sticky*/
+    pointer-events: none;
+}
+.oneline {
+    white-space:nowrap;
+    width:1%
+}
+@media screen {
+    #printSection {
+        display: none;
+    }
+  }
+  @page {
+    size: A4;
+    margin: 0;
+  }
+  @media print {
+    body * {
+     /* display:none; */
+    }
+    #printSection, #printSection * {
+      visibility:visible;
+    }
+    #printSection {
+      position:absolute;
+      left:0;
+      top:0;
+      margin: 0px;
+    }
+    .titretableau{
+      color: #BE1D2E;
+      -webkit-print-color-adjust: exact;
+    }
+    .pageprintcreator{
+      font-size: 0.81rem;
+      margin: 1cm;
+      border: initial;
+      border-radius: initial;
+      width: initial;
+      min-height: initial;
+      box-shadow: initial;
+      background: initial;
+      page-break-after: always;
+      }
+  }
+  .pageprintcreator{
+   width: 100%;
+   min-height: 29cm;
+   padding: 1cm;
+   margin: auto;
+   border-radius: 5px;
+   font-size: 0.81rem;
+    }
+.fieldsetbox{
+    border: 0px solid #999;
+    border-radius: 7px;
+    box-shadow: 0px 1px 1px 0px #d1d0d0;
+}
+#result,#result2 {
+    position: absolute;
+    width: 75%;
+    max-width:870px;
+    cursor: pointer;
+    overflow-y: auto;
+    max-height: 400px;
+    box-sizing: border-box;
+    z-index: 1001;
+    text-transform: capitalize;
+}
+.link-class:hover{
+    background-color:#f1f1f1;
+   }

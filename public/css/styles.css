@@ -1,0 +1,51 @@
+body {
+    margin: 0;
+    padding: 0;
+    /* font-family: Arial, sans-serif; */
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* Hauteur de la fenêtre visible */
+}
+
+.row {
+    flex: 1; /* La rangée s'étire pour remplir l'espace disponible */
+    display: flex;
+}
+
+.col {
+    flex: 1; /* Les colonnes s'étirent pour remplir l'espace disponible */
+    padding: 20px;
+    border: 1px solid #ccc;
+}
+
+/* Styles spécifiques pour les rangées */
+.top-row {
+    background-color: #f0f0f0;
+    flex: 9; /* La première rangée occupe 90% de l'espace */
+}
+
+.bottom-row {
+    background-color: #0080FF;
+    flex: 1; /* La deuxième rangée occupe 10% de l'espace */
+}
+
+@media (max-width: 768px) {
+    main {
+        flex-direction: column; /* Changer l'orientation en colonne */
+    }
+
+    .row {
+        flex-direction: column; /* Changer l'orientation en colonne */
+    }
+
+    .top-row {
+        flex: 1; /* La première rangée occupe tout l'espace disponible */
+    }
+
+    .bottom-row {
+        flex: 1; /* La deuxième rangée occupe tout l'espace disponible */
+    }
+}

@@ -1,0 +1,40 @@
+affaires.*	    
+    affaires.show	    
+    affaires.create	
+    affaires.edit	    
+    affaires.delete
+    affaires.upload
+
+bordereaux.*
+    bordereaux.show
+
+conventions.*
+    conventions.show
+
+finances.*	    
+    finances.show	    
+    finances.edit	    
+    finances.delete
+
+user.*	        
+    user.create	        
+    user.edit	        
+    user.show	        
+    user.delete
+
+settings.*
+    settings.show
+
+
+/**
+ * Display a listing of the resource.
+ *
+ * @return \Illuminate\Http\Response
+ */
+function __construct()
+{
+        $this->middleware('permission:product-list|product-create|product-edit|product-delete', ['only' => ['index','show']]);
+        $this->middleware('permission:product-create', ['only' => ['create','store']]);
+        $this->middleware('permission:product-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:product-delete', ['only' => ['destroy']]);
+}

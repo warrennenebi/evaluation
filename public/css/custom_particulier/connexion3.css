@@ -1,0 +1,46 @@
+body{
+    padding: 0;
+    margin: 0;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    display: flex;
+    min-height: 100vh;
+    background-image: url(negociation.jpg);
+    background-size: cover;
+}
+
+.container{
+    border: none;
+    padding: 15px;
+    height: 410px;
+    width: 400px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 2px 2px 15px rgb(143, 135, 135);
+    background-color:white ;
+}
+input{
+    align-self:center ;
+    margin: 12px;
+    width: 230px;
+    height: 30px;
+    border: black 1.5px solid;
+    border-radius: 3px;
+}
+
+a{
+    text-decoration: none;
+    color: black;
+    font-weight: 500;
+}
+input[type=submit]{
+    color: white;
+    background: #365a39;
+    cursor: pointer;
+    border: none;
+}
+p{
+    position: absolute;
+    margin-left: 70px
+}

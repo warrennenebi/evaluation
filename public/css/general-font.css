@@ -1,0 +1,32 @@
+*{
+    font-family:'GothamRoundedBook';
+}
+@font-face {
+    font-family: 'GothamRoundedLight';
+    src:url('../css/font-awesome/fonts/gothamrnd-light.eot');
+    src:url('../css/font-awesome/fonts/gothamrnd-light.eot') format('embedded-opentype'),
+        url('../css/font-awesome/fonts/gothamrnd-light.woff') format('woff'),
+        url('../css/font-awesome/fonts/gothamrnd-light.ttf') format('truetype'),
+        url('../css/font-awesome/fonts/gothamrnd-light.svg#GothamRoundedLight') format('svg');}
+@font-face {
+    font-family: 'GothamRoundedBold';
+    src: url('../css/font-awesome/fonts/gothamrnd-bold.eot');
+    src: url('../css/font-awesome/fonts/gothamrnd-bold.eot') format('embedded-opentype'),
+        url('../css/font-awesome/fonts/gothamrnd-bold.woff') format('woff'),
+        url('../css/font-awesome/fonts/gothamrnd-bold.ttf') format('truetype'),
+        url('../css/font-awesome/fonts/gothamrnd-bold.svg') format('svg');}
+@font-face {
+    font-family: 'GothamRoundedBook';
+    src: url('../css/font-awesome/fonts/gothamrnd-book.eot');
+    src: url('../css/font-awesome/fonts/gothamrnd-book.eot') format('embedded-opentype'),
+        url('../css/font-awesome/fonts/gothamrnd-book.woff') format('woff'),
+        url('../css/font-awesome/fonts/gothamrnd-book.ttf') format('truetype'),
+        url('../css/font-awesome/fonts/gothamrnd-book.svg#GothamRoundedBook') format('svg');}
+@font-face {
+    font-family: 'GothamRoundedMedium';
+    src: url('../css/font-awesome/fonts/gothamrnd-medium.eot');
+    src: url('../css/font-awesome/fonts/gothamrnd-medium.eot') format('embedded-opentype'),
+        url('../css/font-awesome/fonts/gothamrnd-medium.woff') format('woff'),
+        url('../css/font-awesome/fonts/gothamrnd-medium.ttf') format('truetype'),
+        url('../css/font-awesome/fonts/gothamrnd-medium.svg#GothamRoundedMedium') format('svg');}
+

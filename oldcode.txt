@@ -1,0 +1,328 @@
+
+// $('body').on('click', "#animationDiv", function() {
+//     $(this).addClass("d-none");
+//     $(this).next("div").removeClass("d-none");
+// });
+
+// $('body').on('click', ".voir_plus", function() {
+//     $(this).addClass("d-none");
+//     $(this).prev("div").removeClass("d-none");
+// });
+
+
+// button de deroulement des accordeons
+// const swithVisivility=(element,type)=>{
+//     if (type=='collapse') {
+//         $( "#"+element ).collapse('toggle')
+//     } else {        
+//         $( "#"+element ).toggle();
+//     }
+// }
+
+$demandesExistantes = demande::where('type_demandes_id', 3)
+                    ->where('direction_id', $demande_recupere->direction_id)
+                    ->where(function ($query) use ($demande_recupere) {
+                        $query->whereBetween('date_depart', [$demande_recupere['date_depart'], $demande_recupere['date_fin']])
+                            ->orWhereBetween('date_fin', [$demande_recupere['date_depart'], $demande_recupere['date_fin']])
+                            ->orWhere(function ($query) use ($demande_recupere) {
+                                $query->where('date_depart', '<=', $demande_recupere['date_depart'])
+                                    ->where('date_fin', '>=', $demande_recupere['date_fin']);
+                            });
+                    })
+                    ->with(['accords' => function ($query) {
+                        $query->where('statut', 1);
+                    }])
+                    ->get();
+
+                    // Vérifier si $demandesExistantes est vide
+                if (count($demandesExistantes) > 0) {
+                        
+                    foreach ($demandesExistantes as $demandeExistante) {
+                        // dd($demandeExistante->accords->count());
+                        if ($demandeExistante->accords->count() > 0) {
+                            return response()->json([
+                                'error' => 1,
+                                'message' => 'Vous ne pouvez pas valider cette demande car la période est déjà occupée par un autre congé.'
+                            ]);
+                        }
+                    }
+                }
+
+
+
+
+public function notification($demande_enregistre_id)
+    {
+        // Récupération de la demande
+        $demande_recupere = demande::where('id', $demande_enregistre_id)->first();
+    
+        // Récupération du circuit de la demande
+        $circuit = circuit_organe::where('label', $demande_recupere->direction_id)->where('filliale_id', $demande_recupere->filliale_id)->with('users')->first();
+    
+        // Récupération de l'organe de la demande
+        $organe = organe_validateur::where('label', $demande_recupere->type_demandes_id)->where('filliale_id', $demande_recupere->filliale_id)->with('types')->get()->pluck('types')->flatten();
+        // dd($circuit, $organe);
+    
+        $organe_id = organe_validateur::where('label', $demande_recupere->type_demandes_id)->with('types')->first()->label;
+    
+        $circuit_organe = $organe->map(function($circuit_o, $key)
+        {
+            return [
+                'circuit' => $circuit_o->circuit,
+            ];
+        });
+
+                
+        $results=[];
+        $usersorgane=[];
+
+    
+        // Récupération des notifications déjà envoyées
+        $nb_notif_user = notification_demande::where('demande_id', $demande_recupere->id)->count();
+    
+        if ($demande_recupere->statut == 0) {
+            // Vérifiez si $circuit n'est pas nul avant d'accéder à ses utilisateurs
+            if ($circuit !== null && !empty($circuit->users)) {
+                //ajour des valideur du circuit dans le tableau des valideur generale
+                foreach($circuit->users as $circuit_user_valideur)
+                {
+                    $usersorgane[]= [$circuit->label,$circuit_user_valideur];
+                }
+            }
+            foreach($circuit_organe as $circuit_valideur)
+            {
+                if ($circuit_valideur['circuit'] !== null && !empty($circuit_valideur['circuit']->users)) {
+                    foreach($circuit_valideur['circuit']->users as $circuit_organe_user_valideur)
+                    {
+                        $usersorgane[]=[$circuit_valideur['circuit']->label,$circuit_organe_user_valideur];
+                    }
+                }
+            }
+
+            $i = 0;
+            // dd($nombre_utilisateur_notif);
+            // retrait des personne deja notifier
+            if($nb_notif_user != 0)
+            {
+                array_splice($usersorgane, 0,$nb_notif_user);
+            }
+            $nombre_utilisateur_notif = count($usersorgane);
+
+
+            foreach($usersorgane as $key=>$direction_user)
+            {
+                Log::info('jai notifié : ' . $key . ' ' . $direction_user[1]->user->name);
+                if ($direction_user[1]->user->id == $demande_recupere->user_id || $direction_user[1]->user->id == auth()->user()->id) {
+                    // Auto-validation uniquement si l'utilisateur est le même que celui qui fait la demande
+                    $notification = notification_demande::create([
+                        'demande_id' => $demande_recupere->id,
+                        'statut' => 1,
+                        'user_id' => $direction_user[1]->user->id,
+                        'circuit_id' => $direction_user[0],
+                        'order' => $direction_user[1]->order,
+                    ]);
+                    
+                    $this->miseAJourStatutDemande($demande_recupere);
+                    (new SendEmailController())->NotificationMail($demande_recupere, $direction_user[1]->user);
+                } 
+                else {
+                    notification_demande::create([
+                        'demande_id' => $demande_recupere->id,
+                        'statut' => $demande_recupere->statut,
+                        'user_id' => $direction_user[1]->user->id,
+                        'circuit_id' => $circuit->label,
+                        'order' => $direction_user[1]->order,
+                    ]);
+
+                    $this->miseAJourStatutDemande($demande_recupere);
+                    (new SendEmailController())->NotificationMail($demande_recupere, $direction_user[1]->user);
+                    return;
+                }
+
+                if ($i == ($nombre_utilisateur_notif-1)) {
+                    $this->autonotifcationupdate($demande_recupere->id);
+                }
+                $i++;
+            }
+            // dd($usersorgane);         
+        }
+    }
+
+
+    ------------------------------------------------
+
+    public function notificationupdate(Request $request, $notification)
+    {
+        //
+
+        
+        $notificationsArray = json_decode($notification);
+
+        $results=[];
+
+        // dd($request, $notification, $notificationsArray);
+
+        for($i=0; $i<count($notificationsArray); $i++)
+        {
+            $notification = notification_demande::where('id', $notificationsArray[$i])->first();
+            
+            // recuperation de la demande
+            $demande_recupere= demande::where('id', $notification->demande_id)->first();
+            // dd($demande_recupere);
+            // recuperation du circuit de la demande
+            $circuit = circuit_organe::where('label', $demande_recupere->direction_id)->where('filliale_id', $demande_recupere->filliale_id)->with('users')->first();
+                
+            // recuperation de l'organe de la demande
+            $organe = organe_validateur::where('label', $demande_recupere->type_demandes_id)->where('filliale_id', $demande_recupere->filliale_id)->with('types')->get()->pluck('types')->flatten();
+
+            $circuit_organe = $organe->map(function($circuit_o, $key)
+            {
+                return
+                [
+                    'circuit' => $circuit_o->circuit,
+                ];
+            });
+
+            if($demande_recupere->type_demandes_id == 1)
+            {
+                $demande_recupere->payement = $request->payement;
+                
+                $demande_recupere->save();
+            }
+            
+            if($request->statut == 2)
+            {
+
+                    $demande_recupere->statut = 2;
+                    
+                    
+                    $demande_recupere->save();
+
+                    demande::where('id', $notification->demande_id)->update(
+                        [
+                            'motif' => $request->motif,
+                        ]);
+
+                        $statut = $this->miseAJourStatutDemande($demande_recupere);
+
+                        // (new SendEmailController())->NotificationValidate($statut, user::find($demande_recupere->user_id));
+                
+            }
+
+            if($request->statut == 1)
+            {
+                // Ajoutez cette ligne après la récupération de la direction de l'utilisateur
+                $demandesExistantes = demande::where('type_demandes_id', 3)
+                ->where('direction_id', $demande_recupere->direction_id)
+                ->with(['accords' => function ($query) {
+                    $query->where('statut', 1);
+                }])
+                ->get();
+
+                // dd(count($demandesExistantes));
+                if (count($demandesExistantes) > 0) {
+
+                    foreach ($demandesExistantes as $key => $demandesExistante) {
+                        // code...
+                        $checkDate1 = Carbon::parse($demande_recupere['date_depart']); // Replace with your actual date
+                        $checkDate2 = Carbon::parse($demande_recupere['date_fin']); // Replace with your actual date
+
+                        $startDate = Carbon::parse($demandesExistante->date_depart);
+                        $endDate = Carbon::parse($demandesExistante->date_fin);
+
+                        $isWithinRange1 = $checkDate1->between($startDate, $endDate);
+                        $isWithinRange2 = $checkDate2->between($startDate, $endDate);
+
+                        if ($isWithinRange1 && $isWithinRange2) {
+                          if ($demandesExistante->accords->count() > 0) {
+                                return response()->json([
+                                    'error' => 1,
+                                    'message' => 'Vous ne pouvez pas valider cette demande car la période est déjà occupée par un autre congé.'
+                                ]);
+                            }
+                        } 
+                        // else {
+                        //   echo "The date $checkDate falls outside the range [$startDate, $endDate]";
+                        // }
+
+
+                    }
+                }
+
+                
+                // dd($notification);
+                $total_notification = notification_demande::where('demande_id', $demande_recupere->id)->count();
+                
+                $total_circuit_user = $circuit_organe
+                ->sum(function($value)
+                {
+                    return $value['circuit']->users->count();
+                });
+                // dd($total_notification, $total_circuit_user, $circuit->users->count());
+
+                $total_user_validateur = $circuit->users->count() + $total_circuit_user;
+
+                if($total_notification == $total_user_validateur)
+                {
+                    $demande_recupere->statut = 1;
+                    
+                    $demande_recupere->save();
+                
+                    demande::where('id', $notification->demande_id)->update(
+                        [
+                            'motif' => $request->motif,
+                        ]);
+        
+                        $statut = $this->miseAJourStatutDemande($demande_recupere);
+        
+                        (new SendEmailController())->NotificationValidate($statut, user::find($demande_recupere->user_id));
+
+                    if ($demande_recupere->type_demandes_id == 3) {
+                        $userProfile = UserProfile::find($demande_recupere->user_id);
+                        
+                        // Calculer le nouveau nombre de jours de congé
+                        $nouveauNombreDeJours = $userProfile->jour_de_conger - $demande_recupere->nombre_de_jours;
+
+                        // Mettre à jour la colonne jour_de_conger du modèle UserProfile
+                        $userProfile->update(['jour_de_conger' => $nouveauNombreDeJours]);
+                    }
+                }
+
+                // dd($notification);
+        
+                
+                $notification->update([
+                    'statut'=> $request->statut,
+                ]);
+
+                $this->notification($notification->demande_id);
+                
+                
+                // Ajouter le résultat à $results
+                $results[] = [
+                    'id' => $notification->id,
+                    'error' => 0, // ou le statut d'erreur approprié
+                    'message' => 'La demande a bien été validée.'
+                ];
+            }
+        } 
+
+        // Vérifier si des erreurs sont présentes dans les résultats
+        $errors = array_filter($results, function ($result) {
+            return $result['error'] === 1;
+        });
+         
+        if (!empty($errors)) {
+            // Il y a des erreurs, renvoyer la réponse appropriée
+            return response()->json($errors[0]); // Vous pouvez ajuster le renvoi en fonction de vos besoins
+        } else {
+            // Aucune erreur, renvoyer la réponse globale
+            return response()->json([
+                'error' => 0,
+                'message' => 'Toutes les demandes ont été validées avec succès.'
+            ]);
+        }
+        
+        // dd($result);
+
+    }
