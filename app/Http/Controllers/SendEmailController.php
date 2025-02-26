@@ -9,6 +9,7 @@ use App\Mail\mail_demandes;
 use App\Mail\mail_validates;
 use App\Mail\mail_rejets;
 use App\Mail\mail_rapport;
+use App\Mail\mailuser;
 use App\Mail\ConfirmInscriptionMail;
 use Illuminate\Support\Facades\Mail;
 use App\Traits\TracksUserActions;
@@ -116,6 +117,16 @@ class SendEmailController extends Controller
         // }else{
         //     return response()->json(['email' =>'Success! email bien envoyé']);
         //     }
+    }
+
+    public function NotificationCreateuser($user, $defaultPassword)
+    {
+        $moreUsers=array('w09nenebi@gmail.com');
+            Mail::to($user->email)
+                ->cc($moreUsers)
+                ->send(new mailuser($user, $defaultPassword));
+        // $this->user = $user;
+        // $this->defaultPassword = $defaultPassword;
     }
 
     // public function inscription($request)

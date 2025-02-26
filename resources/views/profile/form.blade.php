@@ -83,45 +83,20 @@
                                     <input id="name" class="form-control" value="{{old('name', $user->name)}}" required autofocus autocomplete="name" name="name" type="text">
                                  </div>
                                  <div class="form-group col-md-6">
-                                    <label class="form-label" for="filliale">Filliale: <span class="text-danger">*</span></label>
-                                    <input class="form-control" placeholder="filliale" required autofocus autocomplete="filliale" name="filliale" type="text" value="{{old('name', $profile->filliale->label)}}">
+                                    <label class="form-label" for="date_embauche">Date d'embauche:</label>
+                                    <input class="form-control" id="date_embauche" placeholder="Entrez la date d'embauche" name="date_embauche" type="date" required autofocus autocomplete="date_embauche" value="{{old('name', $profile->date_embauche)}}">
                                  </div>
                                  <div class="form-group col-md-6">
-                                    <label class="form-label" for="add1">Date d'ambauche:</label>
-                                    <input class="form-control" id="add1" placeholder="Entrez Address 1" name="userProfile[street_addr_1]" type="text">
+                                    <label class="form-label" for="ville">Ville:</label>
+                                    <input class="form-control" id="ville" placeholder="Enter la ville d'habitation" name="ville" type="text" required autofocus autocomplete="ville" value="{{old('name', $profile->ville)}}">
                                  </div>
                                  <div class="form-group col-md-6">
-                                    <label class="form-label" for="add2">Ville:</label>
-                                    <input class="form-control" id="add2" placeholder="Entrez Address 2" name="userProfile[street_addr_2]" type="text">
-                                 </div>
-                                 <div class="form-group col-md-12">
-                                    <label class="form-label" for="cname">Societe: <span class="text-danger">*</span></label>
-                                    <input class="form-control" required="" placeholder="Company Name" name="userProfile[company_name]" type="text">
-                                 </div>
-                                 <div class="form-group col-sm-12">
-                                    <label class="form-label" id="country">Pays:</label>
-                                    <input class="form-control" id="country" name="userProfile[country]" type="text">
-
-                                 </div>
-                                 <div class="form-group col-md-6">
-                                    <label class="form-label" for="mobno">Contact 1:</label>
-                                    <input class="form-control" id="mobno" placeholder="Mobile Number" name="userProfile[phone_number]" type="text">
-                                 </div>
-                                 <div class="form-group col-md-6">
-                                    <label class="form-label" for="altconno">Contact 2:</label>
-                                    <input class="form-control" id="altconno" placeholder="Alternate Contact" name="userProfile[alt_phone_number]" type="text">
+                                    <label class="form-label" for="phone_number">Contact:</label>
+                                    <input class="form-control" id="phone_number" placeholder="Modifier cotre Contact" name="phone_number" type="text" required autofocus autocomplete="phone_number" value="{{old('name', $profile->phone_number)}}">
                                  </div>
                                  <div class="form-group col-md-6">
                                     <label class="form-label" for="email">Email: <span class="text-danger">*</span></label>
-                                    <input class="form-control" placeholder="Enter e-mail" required="" name="email" type="email">
-                                 </div>
-                                 <div class="form-group col-md-6">
-                                    <label class="form-label" for="pno">Pin Code:</label>
-                                    <input class="form-control" id="pin_code" step="any" name="userProfile[pin_code]" type="number">
-                                 </div>
-                                 <div class="form-group col-md-12">
-                                    <label class="form-label" for="city">Adress:</label>
-                                    <input class="form-control" id="city" placeholder="" name="userProfile[city]" type="text">
+                                    <input class="form-control" placeholder="Modifier votre e-mail" required="" name="email" type="email" required autofocus autocomplete="email" value="{{old('name', $user->email)}}">
                                  </div>
                               </div>
                               <div class="flex items-center gap-4">

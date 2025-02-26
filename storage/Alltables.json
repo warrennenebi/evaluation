@@ -15,7 +15,7 @@
     "14": "TableauUtilisateurs",
     "15": "rolesTable",
     "16": "permissionTable",
-    "17": "DemandesTable", 
+    "17": "DemandesTable",
     "18": "DemandesTraitementTable", 
     "19": "TraitementDemandesTable",
     "20": "CompaniesTable",
@@ -29,5 +29,6 @@
     "28": "TableauCircuitValidation",
     "29": "TableauOrganeValidateur",
     "30": "ObjetdemandeTable",
-    "31": "ReseauDeSoinTable"
+    "31": "ReseauDeSoinTable",
+    "32": "ProfilesTable",
 }]

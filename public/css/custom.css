@@ -20,7 +20,7 @@ i{
 }
 /* red label custom color */
 label{
-    color: #BE1D2E;
+    color: #0080FF;
 }
 
 /* table responsive without x-overflow */
@@ -79,7 +79,7 @@ input[type=number] {
 th {
     /* position: sticky;
     top: 0; */
-    background-color: #BE1D2E !important;
+    background-color: #0080FF !important;
     color: white !important;
 }
 /* td cell ellipsis */

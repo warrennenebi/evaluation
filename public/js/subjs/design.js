@@ -449,6 +449,45 @@ function format(d,tableRef=null) {
             '</table>'
         );
     }
+    if (toApplytable=="ProfilesTable") {
+        let procces_count = ''
+        for (let i = 0; i < d.nombre_notifications; i++) {
+            let color = '';
+            if (i+1 <= d.procces_valide_result.notif_total) {
+                color = 'bg-secondary text-white';
+            }
+            procces_count += '<td class="text-center py-0 '+ color +'">'+ d.notification[i].user.name +'</td>'
+        }
+        return (
+            '<table class="table table-hover table-sm table-bordered" id="subtable'+d.id+'">' +
+            '<tr>' +
+            (d.type_demandes_id !== 1 ? '<th class="text-center">Periode</th>':'<th class="text-center">Montant de demande</th>')+
+            (d.type_demandes_id == 3 ? '' : '<th class="text-center">Justificatifs</th>') +
+            '<th class="text-center">Motif </th>' +
+            '</tr>'
+            +
+            (d.type_demandes_id !== 1 ? '<td class="align-center py-0">'+
+            '<table class="w-100">' +
+            '<tr class="text-center py-0">' +
+                '<td > Depart : ' + dateFormat(d.date_depart) + '</td>' +
+                '<td >Fin : ' + dateFormat(d.date_fin )+ '</td>' +
+            '</tr>' +
+        '</table>'+
+        '</td>' : '<td class="text-center py-0">'+ checkPercentage(d.montant_demande,'XOF','currency')+'</td>') +
+        (d.type_demandes_id == 3 ? '' : '<td class="text-center py-0">'+ '<i class="material-icons text-black visualiser" title="visualiser" data-type="visualiser" data-index="' + d.id + '" data-modal="justif" data-route="visualiser"> &#xe873;</i>'+'</td>') +
+            '<td class="text-center py-0">'+ (d.statut==2? d.motif : '')+'</td>' +
+            '</table>'+
+            '<table class="table table-hover table-sm table-bordered" id="subtable'+d.id+'">' +
+            '<tr>' +
+            '<th class="" colspan="'+d.nombre_notifications+'">Progression</th>' +
+            '</tr>'
+            +
+            '<tr>' +
+            procces_count+
+            '</tr>'+
+            '</table>'
+        );
+    }
     if (toApplytable=="DemandesTraitementTable") {
         return (
             '<table class="table table-hover table-sm table-bordered" id="subtable'+d.id+'">' +
@@ -1706,7 +1745,7 @@ function applyDataTablesTo(toApplytable) {
                         }
                     },
                     {
-                        className: 'align-middle',
+                        className: 'py-2 oneline align-middle',
                         // data: 'objets',
                         data: null,
                         defaultContent: '.................................',
@@ -1744,7 +1783,7 @@ function applyDataTablesTo(toApplytable) {
                             if(data==0){
                             return'En Attente'}
                             else if(data==1){
-                            return'Veuillez vous rendre à la direction générale pour valider votre demande'}
+                            return'Veuillez vous rendre à la direction générale pour recuperer votre autorisation de sortie'}
                             else if(data==2){
                             return'Réfusée'}
                         }
@@ -1775,9 +1814,7 @@ function applyDataTablesTo(toApplytable) {
                         render: function (data, type, row) {
                             // Vérifier si la valeur de la colonne est null
                             if (row.statut == 0) {
-                                return '<i class="material-icons text-black confirmation" title="refresh" data-type="refresh" data-index="' + row.id + '" data-info="' + row.types.label + ' '+numdemande+'" data-modal="modal_'+row.type_demandes_id+'">&#xe5d5;</i>'
-
-                                +'<i class="material-icons text-secondary edit" data-toggle="tooltip" title="modifier" data-index="' + row.id + '" data-info="' + row.types.label + ' '+numdemande+'" data-modal="modal_'+row.type_demandes_id+'">&#xf88d;</i>'
+                                return '<i class="material-icons text-secondary edit" data-toggle="tooltip" title="modifier" data-index="' + row.id + '" data-info="' + row.types.label + ' '+numdemande+'" data-modal="modal_'+row.type_demandes_id+'">&#xf88d;</i>'
                                  +
                                     '<i class="material-icons text-primary delete" data-toggle="tooltip" title="supprimer"  data-type="annulation" data-index="' + row.id + '" data-info="' + row.types.label + ' '+numdemande+'" data-modal="modal_'+row.type_demandes_id+'">&#xE872;</i>';
                             } else {
@@ -1791,6 +1828,87 @@ function applyDataTablesTo(toApplytable) {
             });
             tableRender['DemandesTable'].on('order.dt search.dt', function () {
                 tableRender['DemandesTable'].column(2, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+                    cell.innerHTML = i + 1;
+                });
+            })
+            .draw();
+        break;
+
+        case "ProfilesTable":
+            tableRender['ProfilesTable'] = $('#ProfilesTable').DataTable({
+                ajax: {
+                    url:'profiles',
+                    dataSrc: 'profiles',
+                },
+                ordering: false,
+                // fnInitComplete: function(oSettings, json) {
+                //     //execution en fin d'initialisation'<"top"fl>rt<"bottom"ip><"clear">'
+                //     // alert( 'DataTables has finished its initialisation.' );
+                //     $("#conventionZone").append('.toolbar');
+                // },
+                columns: [
+                    {
+                        className: 'oneline py-2 text-center',
+                        data: null,
+                        // render: function(data, type, row)
+                        // {
+                        //     return '';
+                        // }
+                    },
+                    {
+                       className: 'py-2 text-center oneline align-middle',
+                        data: 'user.username',
+                        render: function(data, type, row)
+                        {
+                        //     return row.type_demandes_id.toString().padStart(3, '0');
+                            return '<span style="font-size: 1em; text-transform: uppercase;">' + data + '</span>';
+                        }
+                    },
+                    {
+                        className: 'py-2 oneline text-center align-middle',
+                        data: 'directions.label',
+                        render: function(data, type, row)
+                        {
+                            return '<span style="font-size: 1em; text-transform: uppercase;">' + data + '</span>';
+                        }
+                    },
+                    {
+                        className: 'py-2 oneline text-center align-middle',
+                        data: 'date_embauche',
+                        render: function(data, type, row)
+                        {
+                            return '<span style="font-size: 1em; text-transform: uppercase;">' + data + '</span>';
+                        }
+                    },
+                    {
+                        // className: 'py-2 oneline text-center align-middle',
+                        // data: 'date_embauche',
+                        // render: function(data, type, row)
+                        // {
+                        //     return '<span style="font-size: 1em; text-transform: uppercase;">' + data + '</span>';
+                        // }
+                        className: 'oneline py-2 text-center lh-0 align-middle',
+                        orderable: false,
+                        data: null,
+                        render: function (data, type, row) {
+                            let actions = '';
+                            if(row.user.active==0)
+                            {
+                                actions += '<i class="material-icons text-secondary active" data-toggle="tooltip" title="activer" data-index="' + row.id + '" data-info="' + row.user.username + '" data-modal="modal_'+row.id+'">&#xe897;</i>';
+                            }
+                            else
+                            {
+                                actions += '<i class="material-icons text-secondary desactive" data-toggle="tooltip" title="desactiver" data-index="' + row.id + '" data-info="' + row.user.username + '" data-modal="modal_'+row.id+'">&#xe898;</i>';
+                            }
+                            actions += '<i class="material-icons text-primary delete" data-toggle="tooltip" title="supprimer"  data-type="annulation" data-index="' + row.user.id + '" data-info="' + row.user.username + '" data-modal="modal_'+row.id+'">&#xE872;</i>';
+                            return actions;
+                        }
+                    }
+                ],
+                order: [[1, 'asc']],
+            });
+            tableRender['ProfilesTable'].on('order.dt search.dt', function () {
+                tableRender['ProfilesTable'].column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
                     cell.innerHTML = i + 1;
                 });
             })

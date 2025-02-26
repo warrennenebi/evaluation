@@ -41,11 +41,11 @@ Route::middleware('auth')->group(function () {
 
     // route de pages de demande
     Route::get('/demande',[DemandeController::class, 'index'])->name('demande');
+    Route::post('/demande', [DemandeController::class, 'store'])->name('enregistrement_demande');
     Route::get('/liste_dem_sg/{label}',[DemandeController::class, 'liste'])->name('liste_dem_sg');
     Route::get('/demande/edit/{id}',[DemandeController::class, 'edit']);
     Route::get('/demande/create',[DemandeController::class, 'create']);
     Route::get('/demande/visualiser/view/{id}',[DemandeController::class, 'visualiser']);
-    Route::get('/traiter_demande/visualiser/view/{id}',[DemandeController::class, 'visualiser']);
     Route::patch('/demande/update/{Demande}',[DemandeController::class, 'update'])->name("demande.update");
     Route::delete('/demande/delete/{id}', [DemandeController::class, 'destroy'])->name('demande.destroy');
     // teste de l'envoie de mail de demande
@@ -53,21 +53,23 @@ Route::middleware('auth')->group(function () {
     Route::get('/calculer',[DemandeController::class, 'calculerDateFin']);
 
     // route de pages de tratement de demande
-    Route::get('/traiter_demande', function () {return view('/pages/traiter_demande');})->name('traiter_demande');
-    Route::get('/traiter_demande/visualiser/view/{id}',[DemandeController::class, 'visualiser']);
+    Route::middleware(['role:admin'])->group(function () {
+        Route::get('/traiter_demande/visualiser/view/{id}',[DemandeController::class, 'visualiser']);
+        Route::get('/traiter_demande', function () {return view('/pages/traiter_demande');})->name('traiter_demande');
+        Route::get('/traiter_demande/visualiser/view/{id}',[DemandeController::class, 'visualiser']);
 
-    Route::get('/demande_traiter', [DemandeController::class, 'indexdemtraiter'])->name('demande_traiter');
-    Route::post('/demande', [DemandeController::class, 'store'])->name('enregistrement_demande');
+        Route::get('/demande_traiter', [DemandeController::class, 'indexdemtraiter'])->name('demande_traiter');
 
-    // pour definir l'accord d'une demande
-    Route::get('/traiter_demande/analyse_demande/view/{notification}',[DemandeController::class, 'analyseshow'])->name("analyse_demande.show");
-    Route::get('/demande_traiter/visualiser/view/{id}',[DemandeController::class, 'visualiser']);
-    Route::patch('/analyse_demande_update/view/{notification}',[DemandeController::class, 'notificationupdate'])->name("analyse_demande.update");
+        // pour definir l'accord d'une demande
+        Route::get('/traiter_demande/analyse_demande/view/{notification}',[DemandeController::class, 'analyseshow'])->name("analyse_demande.show");
+        Route::get('/demande_traiter/visualiser/view/{id}',[DemandeController::class, 'visualiser']);
+        Route::patch('/analyse_demande_update/view/{notification}',[DemandeController::class, 'notificationupdate'])->name("analyse_demande.update");
 
-    // route pour les filliales
-    Route::post('/filliale', [FillialeController::class, 'store'])->name('traitement_demande');
+        // route pour les filliales
+        Route::post('/filliale', [FillialeController::class, 'store'])->name('traitement_demande');
+    });
 
-    // Route::middleware(['role:superAdmin'])->group(function () {
+    Route::middleware(['role:superadmin'])->group(function () {
         // circuit validateur route
         Route::get('/parametres/{vue}',[SettingController::class, 'menu_parametre'])->name('parametres.vers');
         Route::get('/parametres',[SettingController::class, 'index_parametre'])->name('parametres');
@@ -139,8 +141,16 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/traceability', [DemandeController::class, 'indexhistorique'])->name('traceability.index');
 
+
+        Route::get('/profiles',[ProfileController::class, 'index'])->name('profiles');
         
-    // });
+        Route::get('/profile/create',[ProfileController::class, 'create']);
+
+        Route::post('/creer_utilisateur', [ProfileController::class, 'store'])->name('creer_utilisateur');
+        Route::delete('/profiles/delete/{id}', [ProfileController::class, 'destroyprofile'])->name('profiles.destroy');
+        Route::post('/profiles/activer/{id}', [ProfileController::class, 'statutactiver'])->name('profiles.statut');
+        Route::post('/profiles/desactiver/{id}', [ProfileController::class, 'statutadesactiver'])->name('profiles.statuts');
+    });
 });
 
 require __DIR__ . '/auth.php';

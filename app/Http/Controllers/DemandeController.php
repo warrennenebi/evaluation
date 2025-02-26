@@ -81,6 +81,7 @@ class DemandeController extends Controller
             $query->whereNull('deleted_at');
         })
         ->count();
+        $profiles = UserProfile::with('user')->with('directions')->orderBy('created_at', 'desc')->get();
         // notification_demande::whereNotNull('demande_id')->where('statut', 1)->whereHas('demande', function($query) {$query->where('user_id', auth()->user()->id);})->with('demande')->orderBy('created_at', 'desc')->get();
         // dd($demande_a_traiter);
         $user = User::with('userProfile')->find(auth()->user()->id);
@@ -91,6 +92,7 @@ class DemandeController extends Controller
             'demande' => $demande,
             'demande_a_traiter' => $demande_a_traiter,
             'demande_traiter' => $demande_traiter,
+            'profiles' => $profiles,
             ];
 
             // Condition pour inclure ou non 'unprocessed_demand_count' dans la réponse
@@ -101,6 +103,7 @@ class DemandeController extends Controller
             }
 
             return response()->json($response);
+            dd($request);
         }
         return view('pages.demande', ['demande'=>$demande, 'user'=>$user]);
     }
@@ -711,14 +714,14 @@ class DemandeController extends Controller
     public function renvoi_mail(demande $demande)
     {
         //
-        $dem_enregistre = notification_demande::where('demande_id', $demande->id)->where('statut', 0)->first();
+        $dem_enregistre = notification_demande::where('demande_id', $demande->id)->where('statut', 0)->with('demande')->first();
 
             // dd($dem_enregistre);
             //! envoie du mail de confirmation
                 # code...
-                // $this->notification($dem_enregistre->id);
+        $this->notification($dem_enregistre->id);
                 
-                (new SendEmailController())->NotificationMail($dem_enregistre, user::find($dem_enregistre->user_id));
+        (new SendEmailController())->NotificationMail($dem_enregistre, user::find($dem_enregistre->user_id));
     }
 
     public function renvoi(demande $demande)

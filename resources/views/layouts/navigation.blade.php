@@ -57,6 +57,12 @@
                             {{ __('Paramètres') }}
                         </x-nav-link>
                     </div>
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-nav-link :href="route('profiles')" :active="request()->routeIs('profiles')">
+                        {{-- <i class=" material-icons px-1">&#xef63</i> --}}
+                            {{ __('Gestionnaire des Utilisateurs') }}
+                        </x-nav-link>
+                    </div>
                 @endcan
             </div>
 
@@ -160,6 +166,12 @@
                 <x-responsive-nav-link :href="route('parametres')" :active="request()->routeIs('parametres')">
                     {{-- <i class=" material-icons px-1">&#xef63</i> --}}
                     {{ __('Paramètres') }}
+                </x-responsive-nav-link>
+            </div>
+            <div class="pt-2 pb-3 space-y-1">
+                <x-responsive-nav-link :href="route('profiles')" :active="request()->routeIs('profiles')">
+                    {{-- <i class=" material-icons px-1">&#xef63</i> --}}
+                    {{ __('Gestionnaire des Utilisateurs') }}
                 </x-responsive-nav-link>
             </div>
         @endcan

@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class UserProfile extends Model
 {
+    use SoftDeletes;
     use HasFactory;
 
     protected $fillable = [
@@ -19,7 +21,7 @@ class UserProfile extends Model
         'pays_id',
         'isEmbauche',
         'directions_id',
-        'filliales_id',
+        'filliale_id',
     ];
 
     public function id()

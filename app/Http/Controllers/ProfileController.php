@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\User;
 use App\Models\UserProfile;
+use App\Models\direction;
+use App\Models\filliale;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -21,6 +23,82 @@ class ProfileController extends Controller
     /**
      * Display the user's profile form.
      */
+
+    public function index(Request $request)
+    {
+
+        // dd($request->ajax());
+        $profiles = UserProfile::with('user')->with('directions')->orderBy('created_at', 'desc')->get();
+        $user = User::with('userProfile')->find(auth()->user()->id);
+        // dd($profiles, $request);
+
+        if ($request->ajax()) {
+            $response = ([
+                'profiles' => $profiles,
+            ]);
+
+            return response()->json($response);
+        }
+        return view('pages.profiles', ['profiles'=>$profiles, 'user'=>$user]);
+    }
+
+    public function create(Request $request)
+    {
+        // dd($request);
+        $direction = direction::all();
+        $filliales = filliale::all();
+        $user = User::all();;
+
+        return view($request->view, [
+            'user'=>$user,
+            'direction'=>$direction,
+            'filliales' => $filliales,
+        ]);
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'username' => 'required|string|max:255|unique:users,username',
+            'email' => 'required|email|unique:users,email',
+            'phone_number' => 'nullable|string|max:20',
+            'direction_id' => 'required|exists:directions,id',
+            'filliale_id' => 'required|exists:filliales,id',
+            'date_embauche' => 'required|date',
+            'isEmbauche' => 'required|in:0,1',        
+        ]);
+
+        $defaultPassword = 'password';
+
+        // Création de l'utilisateur
+        $user = User::create([
+            'name' => $request->name,
+            'username' => $request->username,
+            'email' => $request->email,
+            'company_id' => 1,
+            'password' => Hash::make($defaultPassword),
+        ]);
+
+        // Création du profil utilisateur
+        UserProfile::create([
+            'user_id' => $user->id,
+            'phone_number' => $request->phone_number,
+            'date_embauche' => $request->date_embauche,
+            'directions_id' => $request->direction_id,
+            'filliale_id' => $request->filliale_id,
+            'company_id' => 1,
+            'jour_de_conger' => 60,
+            'pays_id' => 1,
+            'ville' => "ABIDJAN",// Par défaut, on met que l'utilisateur est embauché
+        ]);
+
+        // Envoi de l'e-mail à l'utilisateur
+        (new SendEmailController())->NotificationCreateuser($user, $defaultPassword);
+
+        return response()->json(['message' => 'Utilisateur créé avec succès'], 201);
+    }
+
     public function edit(Request $request): View
     {
         $profile = UserProfile::where('user_id', auth()->user()->id)->with('directions')->with('filliale')->with('picture')->first();
@@ -122,4 +200,34 @@ class ProfileController extends Controller
         return redirect()->route('demande')->withSuccess('Mot de passe et signature modifiés avec succès!'); // Redirige l'utilisateur après la mise à jour du mot de passe
     }
 
+    public function destroyprofile(User $id)
+    {
+        //
+
+        $id->userProfile()->delete();
+        $id->delete();
+    }
+
+    public function statutactiver(User $id)
+    {
+        $user = User::findOrFail($id->id); // Utilisation correcte de l'ID
+        $user->active = 1; // Forcer l'activation uniquement
+        $user->save();
+
+        return response()->json([
+            'message' => 'L\'utilisateur a été activé avec succès.',
+            'new_status' => $user->active
+        ]);
+    }
+    public function statutadesactiver(User $id)
+    {
+        $user = User::findOrFail($id->id); // Utilisation correcte de l'ID
+        $user->active = 0; // Forcer l'activation uniquement
+        $user->save();
+
+        return response()->json([
+            'message' => 'L\'utilisateur a été desactivé avec succès.',
+            'new_status' => $user->active
+        ]);
+    }
 }

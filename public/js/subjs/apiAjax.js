@@ -59,8 +59,7 @@ $.ajaxSetup({
     },
 });
 //!DISPLAY ERROR**********************************************
-async function displayerror(params) {
-    Swal.close();
+async function displayerror(params) {    Swal.close();
     const {
         value: accept
     } = await Swal.fire({
@@ -662,32 +661,6 @@ function soumettrePay (form) {
         }
     });    
 };
-// demande d'information
-// function getdata (){
-//     axios.get('dashboardinfo',
-//     config)
-//     .then(function (response) {
-//         console.log(response);
-//         $('#nombres_affaire').html(response.data.nombres_affaire);                
-//         $('#chiffres_affaire').html(
-//             new Intl.NumberFormat(
-//                 "fr-FR",
-//                 {
-//                     currency: 'XOF',
-//                     style: "currency",
-//                 }
-//             ).format(response.data.chiffres_affaire));
-//         $('#nombres_placement').html(response.data.nombres_placement);
-//         $('#nombres_reassureur').html(response.data.nombres_reassureur);
-//     })
-//     .catch(function (error) {
-//         // console.log(error);
-//         useSwalError("Une erreur s'est produite. mise à jour information impossible !");
-//         displayerror(error.response.request.responseText);        
-//     });
-    
-// };
-
 //! ***********buttons actions************ */
 function deleteElement(params,message="",route=null) {
     
@@ -794,14 +767,7 @@ function changeStatutElement(params,message="") {
 }
 
 function statutconfirm(params,message="") {
-    
-    // let urllink=$params[0].dataset.info;
-    // console.log(params);
-    // return
     axios.get((location.pathname)+'/mail_renvoi/'+params, config)
-
-    // console.log(params[0]);
-    // url: (urllink == 'demande') ? $('#loadurl_base').attr('content')+ '/demande'+params[0].dataset.type+'/'+params[0].dataset.index : $('#loadurl_base').attr('content')+"/pages/demande/"+params[0].dataset.type+'/'+params[0].dataset.index,
     .then(function (response) {
         // console.log(response);
         useSwalSuccess(message+' à été re-envoyer !');
@@ -818,40 +784,6 @@ function statutconfirm(params,message="") {
     });
 
 }
-// function statutconfirm(params,message="") {
-
-    
-//     // return
-//     data_contents={},
-//     v_temp=[];
-//     let urllink = params[0].dataset.info;
-//     console.log(urllink);
-// // console.log(params[0],params[0].dataset.index,urllink,$('#loadurl_base').attr('content')+"/"+C+"/"+params[0].dataset.index);
-
-// // return
-//     $.ajax({
-//         //La méthode d'envoi (type de requête)
-//         type: "GET",
-//         //L'URL de la requête
-//         url: (urllink == 'demande') ? $('#loadurl_base').attr('content')+ '/demande'+params[0].dataset.type+'/'+params[0].dataset.index : $('#loadurl_base').attr('content')+"/pages/demande/"+params[0].dataset.type+'/'+params[0].dataset.index,   
-//         // donnée de la requete
-//         data:data_contents,        
-//         //Ce code sera exécuté en cas de succès - La réponse du serveur est passée à done()
-//         success:function(response){
-//             useSwalSuccess(message+' Demande re-envoyer !');
-//             $('.tabletoget').each(function() {
-//                 tableRender[$( this ).html()].ajax.reload();            
-//             });
-//         },
-//         //Ce code sera exécuté en cas d'échec - L'erreur est passée à fail()
-//         //On peut afficher les informations relatives à la requête et à l'erreur
-//         error:function(error){
-//             // console.log(error);
-//             displayerror(error.response.demande.responseText);        
-//             useSwalError("Nous ne parvenons pas à re-envoyer votre demande !");
-//         }
-//     });
-// }
 // action de visualisation
 $('body').on('click','.view', function () {
     viewElement($(this),$(this).data('info'));
@@ -875,7 +807,54 @@ $('body').on('click','.delete', function () {
 $('body').on('click','.analyse', function () {
         viewElement($(this),$(this).data('info'),$(this).data('route'));
 })
+$('body').on('click','.active', function () {
+    const message = 'Vous êtes sur le point d\'activer l\'utilisateur <span class="fw-bold">'+$(this).data('info')+'</span><br> Voulez-vous continuer ?';
+    useSwalConfirm(message, () => {
+        activerElement($(this).data('index'),$(this).data('info'),$(this).data('route'));
+    }, "Oui, activer", "Non, annuler");
+})
+function activerElement(params, message = "", route = null) {
+    let urllink = $('.nav-link.active').data('urllink');
 
+    axios.post((urllink ? urllink : location.pathname) + (route ? "/" + route : "") + '/activer/' + params, 
+    {}, config) 
+    .then(function (response) {
+        useSwalSuccess(message + ' a été activé avec succès !');
+
+        $('.tabletoget').each(function () {
+            tableRender[$(this).html()].ajax.reload();
+        });
+
+    })
+    .catch(function (error) {
+        console.log(error);
+        useSwalError("Une erreur s'est produite. Activation impossible !");
+    });
+}
+$('body').on('click','.desactive', function () {
+    const message = 'Vous êtes sur le point de desactiver l\'utilisateur <span class="fw-bold">'+$(this).data('info')+'</span><br> Voulez-vous continuer ?';
+    useSwalConfirm(message, () => {
+        desactiverElement($(this).data('index'),$(this).data('info'),$(this).data('route'));
+    }, "Oui, desactiver", "Non, annuler");
+})
+function desactiverElement(params, message = "", route = null) {
+    let urllink = $('.nav-link.active').data('urllink');
+
+    axios.post((urllink ? urllink : location.pathname) + (route ? "/" + route : "") + '/desactiver/' + params, 
+    {}, config) 
+    .then(function (response) {
+        useSwalSuccess(message + ' a été desactivé avec succès !');
+
+        $('.tabletoget').each(function () {
+            tableRender[$(this).html()].ajax.reload();
+        });
+
+    })
+    .catch(function (error) {
+        console.log(error);
+        useSwalError("Une erreur s'est produite. Desactivation impossible !");
+    });
+}
 $('body').on('click','.visualiser', function () {
     viewElement($(this),'',$(this).data('route'));
 })
@@ -885,92 +864,6 @@ $('body').on('click','.deleteLine', function () {
         $('#'+$(this).data('index')).remove();
     // });
 })
-
-// $('body').on('change', "#date_depart,#selectpermission,#selects", function () {
-
-//     // Récupérer la date de départ
-//     var userStartDate = $(this).val();
-
-//     // Récupérer la valeur de l'attribut data-jour de l'option sélectionnée
-//     var nombreDeJours = $('#selectpermission').find(':selected').data('jour');
-
-//     // Récupérer la valeur de l'attribut data-jour de l'option sélectionnée
-//     var nombreDeJour = $('#selects').find(':selected').data('jour');
-
-//     var Jour = $('#numb_de_jours').find(':selected').val();
-
-//     console.log(nombreDeJours, nombreDeJour);
-
-//     // Si le nombre de jours est valide, mettre à jour la date de fin
-//     if (nombreDeJours < 15) {
-
-//         if (userStartDate) {
-//             // Convertir la date de début en objet Date
-//             var dateDebutObj = new Date(userStartDate);
-
-//             // Calculer la date de fin en ajoutant le nombre de jours
-//             var datefin = addBusinessDays(dateDebutObj, parseInt(nombreDeJours));
-
-//             // Mettre à jour la valeur du champ de date de fin
-//             $('#date_fin2').val(formatDate(datefin));
-//         }
-//     }
-//     // Vérifier si la date de départ est valide
-//     else if (nombreDeJour === 15) {
-
-//         if (userStartDate) {
-//             // Convertir la chaîne de date de départ en objet Date
-//             var startDate = new Date(userStartDate);
-
-//             // Calculer la date de fin d'un congé de 30 jours
-//             var endDate30Days = addBusinessDays(startDate, parseInt(Jour));
-
-//             // Mettre à jour la valeur du champ "Date de fin"
-//             $("#date_fin").val(formatDate(endDate30Days));
-//         }
-//     } else if (nombreDeJour === 30) {
-
-//         if (userStartDate) {
-//             // Convertir la chaîne de date de départ en objet Date
-//             var startDate = new Date(userStartDate);
-
-//             // Calculer la date de fin d'un congé de 30 jours
-//             var endDate30Days = addBusinessDays(startDate, parseInt(nombreDeJour));
-
-//             // Mettre à jour la valeur du champ "Date de fin"
-//             $("#date_fin").val(formatDate(endDate30Days));
-//         }
-//     } else {
-//         $('body #date_fin2').val('').attr('readonly', false);
-//         $('body #date_fin').val('').attr('readonly', false);
-//     }
-// });
-
-// function addBusinessDays(startDate, days) {
-//     var current = new Date(startDate);
-//     var isWeekend = function (date) {
-//         return date.getDay() % 6 === 0;
-//     };
-
-//     while (days > 0) {
-//         current.setDate(current.getDate() + 1);
-//         if (!isWeekend(current) && !isHoliday(current)) {
-//             days--;
-//         }
-//     }
-
-//     return current;
-// }
-
-// function isHoliday(date) {
-//     // Mettez en œuvre la logique pour vérifier si la date est un jour férié
-//     // Utilisez la bibliothèque date-holidays ou toute autre source de données sur les jours fériés
-//     // Retournez true si la date est un jour férié, sinon false
-//     // Exemple simple : return date.getMonth() === 11 && date.getDate() === 25; (Noël)
-//     return false;
-// }
-
-
 $('body').on('change', "#date_depart, #selectpermission, #selects", function () {
     var userStartDate = $("#date_depart").val();
     var nombreDeJours = $('#selectpermission').find(':selected').data('jour');
@@ -1067,30 +960,6 @@ function formatDate(date) {
 
     return yyyy + '-' + mm + '-' + dd;
 }
-
-// Votre code existant ici...
-
-// Exemple d'utilisation de la fonction addBusinessDays
-// var startDate = new Date();
-// var endDate = addBusinessDays(startDate, 5);
-// console.log(formatDate(endDate));
-
- 
-
-    // // Récupérer la date de début depuis le formulaire
-    // var userStartDate = data_contents['date_depart']; // Assurez-vous que le champ date_debut existe dans votre formulaire
-
-    // // Convertir la chaîne de date de départ en objet Date
-    // var startDate = new Date(userStartDate);
-
-    // // Calculer la date de fin d'un congé de 30 jours
-    // var endDate30Days = new Date(startDate);
-    // endDate30Days.setDate(startDate.getDate() + 30);
-
-    // // Ajouter la date de fin calculée à l'objet data_contents
-    // data_contents['date_fin'] = endDate30Days.toISOString().split('T')[0]; // Format YYYY-MM-DD
-
-
 // action activation desactivation
 $('body').on('click','.Set_Statut', function () {
     changeStatutElement();
@@ -1142,31 +1011,3 @@ $('body').on('click', '.infirmation', function()
     }, "Oui, annuler", "Non");
     // let url = $(this).data('type');
 });
-
-// Enregistrement d'élément dans Tableau Cotation Bâtiment
-// $('body').on('click', '.password_form', function () {
-//     let url = $(this).data('lien');  // URL de l'action (définie dans le bouton)
-//     let formId = $(this).data('form');  // ID du formulaire associé
-//     let message = "Modification du mot de passe effectuée avec succès";
-
-//     // Récupération du formulaire
-//     let form = document.getElementById(formId);
-//     if (form) {
-//         // Soumission du formulaire via AJAX
-//         $.ajax({
-//             url: url,
-//             method: 'POST',
-//             data: new FormData(form),
-//             processData: false,
-//             contentType: false,
-//             success: function(response) {
-//                 // Affichage du message de confirmation
-//                 alert(message);
-//                 // Tu peux rediriger ou effectuer une autre action ici si besoin
-//             },
-//             error: function(error) {
-//                 alert("Une erreur est survenue lors de la modification du mot de passe.");
-//             }
-//         });
-//     }
-// });

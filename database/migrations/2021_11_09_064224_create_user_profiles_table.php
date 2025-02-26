@@ -11,7 +11,7 @@ class CreateUserProfilesTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('user_profiles', function (Blueprint $table) {
             $table->id();
@@ -25,6 +25,7 @@ class CreateUserProfilesTable extends Migration
             $table->foreignId('filliale_id')->contrained()->onDelect('cascade')->nullable();
             $table->foreignId('user_id')->cascade('delete');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -33,7 +34,7 @@ class CreateUserProfilesTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('user_profiles');
     }
