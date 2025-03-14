@@ -66,7 +66,8 @@ class ProfileController extends Controller
             'direction_id' => 'required|exists:directions,id',
             'filliale_id' => 'required|exists:filliales,id',
             'date_embauche' => 'required|date',
-            'isEmbauche' => 'required|in:0,1',        
+            'isEmbauche' => 'required|in:0,1',
+            'role' => 'required|in:user,usercomptable,admin,superadmin'        
         ]);
 
         $defaultPassword = 'password';
@@ -88,11 +89,13 @@ class ProfileController extends Controller
             'directions_id' => $request->direction_id,
             'filliale_id' => $request->filliale_id,
             'company_id' => 1,
-            'jour_de_conger' => 60,
+            'jour_de_conger' => 30,
             'pays_id' => 1,
             'ville' => "ABIDJAN",// Par défaut, on met que l'utilisateur est embauché
         ]);
 
+        $user->assignRole($request->role);
+        
         // Envoi de l'e-mail à l'utilisateur
         (new SendEmailController())->NotificationCreateuser($user, $defaultPassword);
 

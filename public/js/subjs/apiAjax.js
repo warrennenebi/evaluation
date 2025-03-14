@@ -807,14 +807,14 @@ $('body').on('click','.delete', function () {
 $('body').on('click','.analyse', function () {
         viewElement($(this),$(this).data('info'),$(this).data('route'));
 })
-$('body').on('click','.active', function () {
+$('body').on('click','.activer', function () {
     const message = 'Vous êtes sur le point d\'activer l\'utilisateur <span class="fw-bold">'+$(this).data('info')+'</span><br> Voulez-vous continuer ?';
     useSwalConfirm(message, () => {
         activerElement($(this).data('index'),$(this).data('info'),$(this).data('route'));
     }, "Oui, activer", "Non, annuler");
 })
 function activerElement(params, message = "", route = null) {
-    let urllink = $('.nav-link.active').data('urllink');
+    let urllink = $('.nav-link.activer').data('urllink');
 
     axios.post((urllink ? urllink : location.pathname) + (route ? "/" + route : "") + '/activer/' + params, 
     {}, config) 
@@ -831,14 +831,14 @@ function activerElement(params, message = "", route = null) {
         useSwalError("Une erreur s'est produite. Activation impossible !");
     });
 }
-$('body').on('click','.desactive', function () {
+$('body').on('click','.desactiver', function () {
     const message = 'Vous êtes sur le point de desactiver l\'utilisateur <span class="fw-bold">'+$(this).data('info')+'</span><br> Voulez-vous continuer ?';
     useSwalConfirm(message, () => {
         desactiverElement($(this).data('index'),$(this).data('info'),$(this).data('route'));
     }, "Oui, desactiver", "Non, annuler");
 })
 function desactiverElement(params, message = "", route = null) {
-    let urllink = $('.nav-link.active').data('urllink');
+    let urllink = $('.nav-link.activer').data('urllink');
 
     axios.post((urllink ? urllink : location.pathname) + (route ? "/" + route : "") + '/desactiver/' + params, 
     {}, config) 

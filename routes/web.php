@@ -7,6 +7,7 @@ use App\Http\Controllers\CircuitOrganeController;
 use App\Http\Controllers\OrganeValidateurController;
 use App\Http\Controllers\FillialeController;
 use App\Http\Controllers\SettingController;
+use App\Http\Controllers\RoleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,28 +30,31 @@ Route::get('/dashboard', function () {
     return view('dashboard');})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/change-password', [ProfileController::class, 'showChangePasswordForm'])->name('change-password');
-    Route::post('/update-password', [ProfileController::class, 'updatePassword'])->name('update-password');
+    Route::middleware(['role:user'])->group(function () {
+        Route::get('/change-password', [ProfileController::class, 'showChangePasswordForm'])->name('change-password');
+        Route::post('/update-password', [ProfileController::class, 'updatePassword'])->name('update-password');
 
 
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::post('/profile/signature', [ProfileController::class, 'signature_update'])->name('signature.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::post('/picture', [PictureController::class, 'store'])->name('picture.update');
+        Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+        Route::post('/profile/signature', [ProfileController::class, 'signature_update'])->name('signature.update');
+        Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+        Route::post('/picture', [PictureController::class, 'store'])->name('picture.update');
 
-    // route de pages de demande
-    Route::get('/demande',[DemandeController::class, 'index'])->name('demande');
-    Route::post('/demande', [DemandeController::class, 'store'])->name('enregistrement_demande');
-    Route::get('/liste_dem_sg/{label}',[DemandeController::class, 'liste'])->name('liste_dem_sg');
-    Route::get('/demande/edit/{id}',[DemandeController::class, 'edit']);
-    Route::get('/demande/create',[DemandeController::class, 'create']);
-    Route::get('/demande/visualiser/view/{id}',[DemandeController::class, 'visualiser']);
-    Route::patch('/demande/update/{Demande}',[DemandeController::class, 'update'])->name("demande.update");
-    Route::delete('/demande/delete/{id}', [DemandeController::class, 'destroy'])->name('demande.destroy');
-    // teste de l'envoie de mail de demande
-    Route::get('/demande/mail_renvoi/{demande}',[DemandeController::class, 'renvoi_mail']);
-    Route::get('/calculer',[DemandeController::class, 'calculerDateFin']);
+        // route de pages de demande
+        Route::get('/demande',[DemandeController::class, 'index'])->name('demande');
+        Route::post('/demande', [DemandeController::class, 'store'])->name('enregistrement_demande');
+        Route::get('/liste_dem_sg/{label}',[DemandeController::class, 'liste'])->name('liste_dem_sg');
+        Route::get('/demande/edit/{id}',[DemandeController::class, 'edit']);
+        Route::get('/demande/create',[DemandeController::class, 'create']);
+        Route::get('/demande/visualiser/view/{id}',[DemandeController::class, 'visualiser']);
+        Route::patch('/demande/update/{Demande}',[DemandeController::class, 'update'])->name("demande.update");
+        Route::delete('/demande/delete/{id}', [DemandeController::class, 'destroy'])->name('demande.destroy');
+        // Route::get('/demandes/filter', [DemandeController::class, 'filter'])->name('demandes.filter');
+        // teste de l'envoie de mail de demande
+        Route::get('/demande/mail_renvoi/{demande}',[DemandeController::class, 'renvoi_mail']);
+        Route::get('/calculer',[DemandeController::class, 'calculerDateFin']);
+    });
 
     // route de pages de tratement de demande
     Route::middleware(['role:admin'])->group(function () {
@@ -141,6 +145,9 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/traceability', [DemandeController::class, 'indexhistorique'])->name('traceability.index');
 
+        Route::get('/roles-permissions', [RoleController::class, 'manageRolesAndPermissions'])
+        ->name('roles.permissions');
+        Route::resource('roles', RoleController::class)->except(['show']);
 
         Route::get('/profiles',[ProfileController::class, 'index'])->name('profiles');
         

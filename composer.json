@@ -29,8 +29,8 @@
         "laravel/breeze": "^1.25",
         "laravel/pint": "^1.0",
         "laravel/sail": "^1.18",
-        
         "nunomaduro/collision": "^7.0",
+        "php-debugbar/php-debugbar": "*",
         "phpunit/phpunit": "^10.1",
         "spatie/laravel-ignition": "^2.0"
     },"mockery/mockery": "^1.4.4",
@@ -74,7 +74,8 @@
             "pestphp/pest-plugin": true,
             "php-http/discovery": true,
             "kylekatarnls/update-helper": true
-        }
+        },
+        "process-timeout": 600
     },
     "minimum-stability": "stable",
     "prefer-stable": true

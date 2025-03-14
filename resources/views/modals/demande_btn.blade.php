@@ -6,7 +6,9 @@
                 {{-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
             </div> --}}
             <div class="modal-body d-flex flex-column justify-content-center m-94">
-                <button class="btn" style="margin-bottom: 61px; border: 1px #000000 solid; text-align: center; border-radius: 110px; font-weight: bold; color: #000000;" type="button" data-bs-dismiss="modal" onclick="fopen ('modals/demande_bien_et_service.modaldemande.show.PositionModal1','demande/create')">Bien & Services</button>
+                @can('comptable')
+                    <button class="btn" style="margin-bottom: 61px; border: 1px #000000 solid; text-align: center; border-radius: 110px; font-weight: bold; color: #000000;" type="button" data-bs-dismiss="modal" onclick="fopen ('modals/demande_bien_et_service.modaldemande.show.PositionModal1','demande/create')">Bien & Services</button>
+                @endcan
 
                 <button class="btn" style="margin-bottom: 61px; border: 1px #000000 solid; text-align: center; border-radius: 110px; font-weight: bold; color: #000000;" type="button" data-bs-dismiss="modal" onclick="fopen ('modals/demande_permission.modalpermi.show.PositionModal1.2','demande/create')">Permissions</button>
                 

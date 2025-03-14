@@ -15,7 +15,6 @@ $(document).on('show.bs.modal', '.modal', function () {
 $(document).on('hidden.bs.modal', '.modal', function(){
     $(this).find('.modal-backdrop').remove();
 });
-
 //Affichage d'éléments Cotations Véhicules & Cotations Bâtiments
 $(document).ready(function() {
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
@@ -1693,6 +1692,9 @@ function applyDataTablesTo(toApplytable) {
             tableRender['DemandesTable'] = $('#DemandesTable').DataTable({
                 ajax: {
                     url:'demande',
+                    data: function(d) {
+                        d.type_id = $('#filterType').val(); // Envoyer le type sélectionné au contrôleur
+                    },
                     dataSrc: 'demande',
                 },
                 ordering: false,
@@ -1745,7 +1747,7 @@ function applyDataTablesTo(toApplytable) {
                         }
                     },
                     {
-                        className: 'py-2 oneline align-middle',
+                        className: 'py-2 text-center align-middle',
                         // data: 'objets',
                         data: null,
                         defaultContent: '.................................',
@@ -1826,6 +1828,9 @@ function applyDataTablesTo(toApplytable) {
                 ],
                 order: [[1, 'asc']],
             });
+            $('#filterType').change(function() {
+                tableRender['DemandesTable'].ajax.reload();
+            });
             tableRender['DemandesTable'].on('order.dt search.dt', function () {
                 tableRender['DemandesTable'].column(2, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
                     cell.innerHTML = i + 1;
@@ -1894,11 +1899,11 @@ function applyDataTablesTo(toApplytable) {
                             let actions = '';
                             if(row.user.active==0)
                             {
-                                actions += '<i class="material-icons text-secondary active" data-toggle="tooltip" title="activer" data-index="' + row.id + '" data-info="' + row.user.username + '" data-modal="modal_'+row.id+'">&#xe897;</i>';
+                                actions += '<i class="material-icons text-secondary activer" data-toggle="tooltip" title="activer" data-index="' + row.id + '" data-info="' + row.user.username + '" data-modal="modal_'+row.id+'">&#xe897;</i>';
                             }
                             else
                             {
-                                actions += '<i class="material-icons text-secondary desactive" data-toggle="tooltip" title="desactiver" data-index="' + row.id + '" data-info="' + row.user.username + '" data-modal="modal_'+row.id+'">&#xe898;</i>';
+                                actions += '<i class="material-icons text-secondary desactiver" data-toggle="tooltip" title="desactiver" data-index="' + row.id + '" data-info="' + row.user.username + '" data-modal="modal_'+row.id+'">&#xe898;</i>';
                             }
                             actions += '<i class="material-icons text-primary delete" data-toggle="tooltip" title="supprimer"  data-type="annulation" data-index="' + row.user.id + '" data-info="' + row.user.username + '" data-modal="modal_'+row.id+'">&#xE872;</i>';
                             return actions;
@@ -4457,25 +4462,36 @@ $('body').on('change','#selects', function() {
         jourConger.style.display = "none";
     }
 });
+
+$('#typeFilter').on('change', function() {
+    var selectedTypeId = $(this).val();  // Récupérer la valeur sélectionnée dans le filtre
+
+    // Recharger les données de DataTables avec le nouveau type_id
+    tableRender['DemandesTable'].ajax.url('demande?type_id=' + selectedTypeId).load();
+});
     // Lorsque la sélection de permission change
 // Lorsque la sélection de permission change
 
 
 // Lorsque la sélection de permission change
 
-$('body').on('change','#question', function() {
-    var selectedValue = $(this).val();
-    var suiteForm = $('#suiteForm');
-    var message = $('#message');
+// $('body').on('change','#question', function() {
+//     var selectedValue = $(this).val();
+//     var suiteForm = $('#suiteForm');
+//     var message = $('#message');
+//     var suiteFormnom = $('#suiteFormnom');
 
-    if (selectedValue === 'oui') {
-        suiteForm.show();
-        message.hide();
-    } else {
-        suiteForm.hide();
-        message.text('Merci, mais vous n\'avez pas droit à cette absence.').show();
-    }
-});
+
+//     if (selectedValue === 'oui') {
+//         suiteForm.show();
+//         suiteFormnom.hide();
+//         message.hide();
+//     } else {
+//         suiteForm.hide();
+//         suiteFormnom.show()
+//         message.hide();
+//     }
+// });
 
 // Add event listener for opening and closing details
 $('body').on('click', 'i.dt_control_expand,span.dt_control_expand', function () {

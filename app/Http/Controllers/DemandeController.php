@@ -45,7 +45,18 @@ class DemandeController extends Controller
     public function index(Request $request)
     {
         //
-        $demande = demande::where('user_id', auth()->user()->id)->with('types')->with('objets')->with('objetsg')->with('user')->with('documents')->with('notification')->orderBy('created_at', 'desc')->get();
+        $types = type_demande::all();
+
+        $query = demande::where('user_id', auth()->user()->id)->with('types')->with('objets')->with('objetsg')->with('user')->with('documents')->with('notification')->orderBy('created_at', 'desc');
+
+        // Filtrer par type_id si un type a été sélectionné
+        if ($request->has('type_id') && !empty($request->type_id)) {
+            $query->where('type_demandes_id', $request->type_id); // Ajouter la condition de filtrage par type_id
+        }
+
+        // Récupérer les demandes après application du filtrage
+        $demande = $query->get();
+
         // dd($demande, $request);
 
         $demande->map(function ($demande) {
@@ -103,9 +114,9 @@ class DemandeController extends Controller
             }
 
             return response()->json($response);
-            dd($request);
+            // dd($request);
         }
-        return view('pages.demande', ['demande'=>$demande, 'user'=>$user]);
+        return view('pages.demande', ['demande'=>$demande, 'user'=>$user, 'types'=>$types]);
     }
 
     public function indexhistorique(Request $request)
@@ -1396,11 +1407,10 @@ class DemandeController extends Controller
                 Log::info('Notification envoyée : ' . $key . ' ' . $direction_user[1]->user->name);
 
                 $userId = $direction_user[1]->user->id;
-                $isAutoValidation = $userId == $demande_recupere->user_id || $userId == auth()->user()->id;
 
                 $notificationData = [
                     'demande_id' => $demande_recupere->id,
-                    'statut' => $isAutoValidation ? 1 : $demande_recupere->statut,
+                    'statut' => $demande_recupere->statut,
                     'user_id' => $userId,
                     'circuit_id' => $direction_user[0],
                     'order' => $direction_user[1]->order,
@@ -1411,12 +1421,9 @@ class DemandeController extends Controller
                 // Appeler la méthode pour envoyer un e-mail à l'utilisateur
                 (new SendEmailController())->NotificationMail($demande_recupere, $direction_user[1]->user);
 
-                if ($isAutoValidation) {
-                    Log::info('Auto-validation effectuée pour l’utilisateur : ' . $direction_user[1]->user->name);
-                } else {
-                    // Si l'utilisateur n'est pas en auto-validation, sortir
-                    return;
-                }
+                
+                // Si l'utilisateur n'est pas en auto-validation, sortir
+                return;
 
                 $i++;
             }

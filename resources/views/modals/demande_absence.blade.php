@@ -16,15 +16,7 @@
    {{-- {{ dd($filliales) }} --}}
     <form id="demande_absence" method="POST">
         <input type="number" name="type_demandes_id" class="d-none" value="4" readonly>
-        <div class="form-group">
-            <label for="question">Votre foyer est-il directement concerné ?</label>
-            <select class="form-control" id="question" name="question">
-                <option selected disabled>--- Choisissez une reponse ---</option>
-                <option value="oui">Oui</option>
-                <option value="non">Non</option>
-            </select>
-        </div>
-        <div id="suiteForm" style="display: none;">
+        <div id="suiteForm">
             @if($user->isEmbauche != 0)
                 <div class="form-group" id="dem_objet_g" style="margin-top: 15px;">
                     <label for="objet" style="font-weight: bold; color: #000000;">Raison de l'absence</label><br>
@@ -56,8 +48,6 @@
             </div>
         </div>
     </form>
-
-    <div id="message" class="mt-3 text-primary" style="display: none;margin-top: 25px;font-size: 18px;text-align: center;"></div>
 @stop
 
 @section('modalbutton')

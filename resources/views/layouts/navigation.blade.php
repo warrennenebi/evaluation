@@ -16,12 +16,14 @@
                         {{ __('Tableau de Bord') }}
                     </x-nav-link>
                 </div> --}}
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('demande')" :active="request()->routeIs('demande')">
-                    {{-- <i class="material-icons px-1">&#xe873</i> --}}
-                        {{ __('Gerer Demandes') }}
-                    </x-nav-link>
-                </div>
+                @can('fairedemande')
+                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                        <x-nav-link :href="route('demande')" :active="request()->routeIs('demande')">
+                            {{-- <i class="material-icons px-1">&#xe873</i> --}}
+                            {{ __('Gerer Demandes') }}
+                        </x-nav-link>
+                    </div>
+                @endcan
                 @can('valide')
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-nav-link :href="route('traiter_demande')" :active="request()->routeIs('traiter_demande')">
@@ -130,12 +132,14 @@
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
         </div>
-        <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('demande')" :active="request()->routeIs('demande')">
-                {{-- <i class="material-icons px-1">&#xe873</i> --}}
-                {{ __('Gerer Demandes') }}
-            </x-responsive-nav-link>
-        </div>
+        @can('fairedemande')
+            <div class="pt-2 pb-3 space-y-1">
+                <x-responsive-nav-link :href="route('demande')" :active="request()->routeIs('demande')">
+                    {{-- <i class="material-icons px-1">&#xe873</i> --}}
+                    {{ __('Gerer Demandes') }}
+                </x-responsive-nav-link>
+            </div>
+        @endcan
         @can('valide')
             <div class="pt-2 pb-3 space-y-1">
                 <x-responsive-nav-link :href="route('traiter_demande')" :active="request()->routeIs('traiter_demande')">

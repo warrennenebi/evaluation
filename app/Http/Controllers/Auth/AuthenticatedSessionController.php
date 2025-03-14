@@ -37,6 +37,9 @@ class AuthenticatedSessionController extends Controller
         if (Auth::user()->first_login) {
             return redirect('change-password');
         }
+        elseif (Auth::user()->hasRole('superadmin')) {
+            return redirect()->route('traceability.index'); // Rediriger vers la table de traçabilité
+        }
         else
         {
             // Redirige l'utilisateur après la connexion réussie

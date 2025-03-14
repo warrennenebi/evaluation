@@ -22,9 +22,6 @@
             <input type="checkbox" class="form-check-input" name="Active" id="" value="checkedValue" checked>Active
           </label>
         </div>
-        <div class="form-group">
-            <input type="text" class="form-control form-control-sm d-none" name="user_id" value="{{$user_id}}" readonly>
-        </div>
     </form>
 @stop
 

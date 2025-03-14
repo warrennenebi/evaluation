@@ -6395,16 +6395,19 @@ textarea.form-control-lg {
     color: inherit !important
 }
 .bg-primary {
-    background-color: #0080ff !important
+    background-color: #004aad !important
 }
 .bg-secondary {
-    background-color: #23301a !important
+    background-color: #008000 !important
 }
 .bg-success {
     background-color: #198754 !important
 }
 .bg-info {
     background-color: #0dcaf0 !important
+}
+.bg-login{
+    background-color: #004aad !important
 }
 .bg-warning {
     background-color: #ffc107 !important

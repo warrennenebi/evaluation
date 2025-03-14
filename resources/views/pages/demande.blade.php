@@ -23,11 +23,21 @@
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
             <div class="p-4 text-gray-900">
                 {{-- {{ __("You're logged in!") }} --}}
-                <div class="btn">
-                    <button class="btn d-flex justify-content-center align-items-center" style="background-color: #ffffff; color: #000000; border: 1px solid #000000; text-align: center; margin: 2px; border-radius: 20px; font-weight: bold; color: #000000;" type="button" data-bs-toggle="modal" data-bs-target="#modalwindow">
-                        <i class="material-icons px-1">&#xea20</i>
-                        Faire une Demande
-                    </button>
+                <div class="row align-items-center justify-content-between">
+                    <div class="btn col-md-2">
+                        <button class="btn d-flex justify-content-center align-items-center" style="background-color: #ffffff; color: #000000; border: 1px solid #000000; text-align: center; margin: 2px; border-radius: 20px; font-weight: bold; color: #000000;" type="button" data-bs-toggle="modal" data-bs-target="#modalwindow">
+                            <i class="material-icons px-1">&#xea20</i>
+                            Faire une Demande
+                        </button>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <select id="filterType" class="form-control">
+                            <option value="">Tous les types</option>
+                            @foreach($types as $type)
+                                <option value="{{ $type->id }}">{{ $type->label }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
                 <div class="bd-example table-responsive">
                     <span id="refDemandesTable" class="tabletoget d-none">DemandesTable</span>

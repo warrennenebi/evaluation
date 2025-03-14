@@ -14,8 +14,8 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         $schedule->command('app:mail_rapports')->dailyAt('17:30');
+        $schedule->command('conge:refill')->monthlyOn(Carbon::now()->daysInMonth, '23:59');
     }
-
     /**
      * Register the commands for the application.
      */

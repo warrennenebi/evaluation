@@ -12,7 +12,7 @@
 
     <div class="w-100" style="flex: 7">
         <div class="col-lg-6">
-            <img src="{{ asset('img/logo2.png')}}" class="img-fluid w-60" alt="...">
+            <img src="{{ asset('img/logo1.png')}}" class="img-fluid w-60 rounded-circle" alt="...">
         </div>
         <div class="col-lg-6 py-9 mx-9 d-flex flex-column">
             <div class="w-100 justify-content-end p-3" style="flex: 0.6;">

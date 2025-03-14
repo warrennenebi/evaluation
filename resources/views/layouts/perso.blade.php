@@ -7,7 +7,8 @@
         <meta id="loadurl" content="{{ route('api.getTable') }}">
         <meta id="loadurl_base" content="{{ URL::to('/') }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <title>{{ config('app.name', 'Gestion DBS') }}</title>
+        <link rel="shortcut icon" type="img/png" href="{{ asset('img/logo.png') }}">
 
         <!-- Scripts -->
         @vite(['resources/js/app.js'])

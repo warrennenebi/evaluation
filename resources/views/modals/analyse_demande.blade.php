@@ -17,7 +17,7 @@
             <label for="avis" style="font-weight: bold; color: #000000;">Avis</label><br>
             <select name="statut" id="statut" class="form-control form-control-sm" style="width: 460px;" required>
                 <option value="1">Validée</option>
-                <option value="2">Non Validée</option>
+                <option value="2">Réfusée</option>
             </select>
         </div>
         @can('payement')
