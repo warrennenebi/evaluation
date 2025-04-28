@@ -20,7 +20,7 @@
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-nav-link :href="route('demande')" :active="request()->routeIs('demande')">
                             {{-- <i class="material-icons px-1">&#xe873</i> --}}
-                            {{ __('Gerer Demandes') }}
+                            {{ __('Mes Demandes') }}
                         </x-nav-link>
                     </div>
                 @endcan
@@ -28,7 +28,7 @@
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-nav-link :href="route('traiter_demande')" :active="request()->routeIs('traiter_demande')">
                         {{-- <i class=" material-icons px-1">&#xef63</i> --}}
-                            {{ __('Traiter Demandes') }}
+                            {{ __('Demandes à Traiter') }}
                             <!-- Affichez le compteur de demandes non traitées -->
                             <span id="unprocessed-demand-counter" class="translate-middle badge rounded-pill bg-danger">
                                 <span class="visually-hidden">unread messages</span>
@@ -53,12 +53,26 @@
                             {{ __('Traçabiliter') }}
                         </x-nav-link>
                     </div>
-                    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                        <x-nav-link :href="route('parametres')" :active="Str::startsWith(request()->route()->uri(),'parametres')">
-                        {{-- <i class=" material-icons px-1">&#xef63</i> --}}
-                            {{ __('Paramètres') }}
-                        </x-nav-link>
-                    </div>
+                    <!-- Lien principal -->
+                    <li class="nav-item dropdown space-x-8 sm:-my-px sm:ml-10 flex items-center justify-between">
+                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
+                            Paramètres
+                        </a>
+                        <ul class="dropdown-menu position: initial; left: 0" style="position: initial">
+                            <li>
+                                <a class="dropdown-item px-4 py-2 {{ request()->fullUrlIs(route('parametres.vers', 'circuit')) ? 'active' : '' }}"
+                                    href="{{ route('parametres.vers', ['circuit']) }}">
+                                    {{ __('Circuits & Organes de Validation') }}
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item px-4 py-2 {{ request()->fullUrlIs(route('parametres.vers', 'objet_demande')) ? 'active' : '' }}"
+                                    href="{{ route('parametres.vers', ['objet_demande']) }}">
+                                    {{ __('Gestion des Objets') }}
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                         <x-nav-link :href="route('profiles')" :active="request()->routeIs('profiles')">
                         {{-- <i class=" material-icons px-1">&#xef63</i> --}}
@@ -117,7 +131,7 @@
             <div class="-mr-2 flex items-center sm:hidden">
                 <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
                     <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                        <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />                                  
+                        <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                         <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 </button>
@@ -213,7 +227,7 @@
                 </span>
             </x-responsive-nav-link>
         </div> --}}
-        
+
 
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">
@@ -230,7 +244,7 @@
                 <!-- Authentication -->
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
-                    <x-responsive-nav-link :href="route('logout')" 
+                    <x-responsive-nav-link :href="route('logout')"
                                     onclick="event.preventDefault();
                                                 this.closest('form').submit();">
                         {{ __('Log Out') }}

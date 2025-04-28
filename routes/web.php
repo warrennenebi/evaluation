@@ -30,7 +30,7 @@ Route::get('/dashboard', function () {
     return view('dashboard');})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::middleware(['role:user'])->group(function () {
+    Route::middleware(['role:user|usercomptable|admin'])->group(function () {
         Route::get('/change-password', [ProfileController::class, 'showChangePasswordForm'])->name('change-password');
         Route::post('/update-password', [ProfileController::class, 'updatePassword'])->name('update-password');
 
@@ -150,7 +150,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('roles', RoleController::class)->except(['show']);
 
         Route::get('/profiles',[ProfileController::class, 'index'])->name('profiles');
-        
+
         Route::get('/profile/create',[ProfileController::class, 'create']);
 
         Route::post('/creer_utilisateur', [ProfileController::class, 'store'])->name('creer_utilisateur');

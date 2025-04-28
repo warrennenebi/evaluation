@@ -16,7 +16,7 @@
         <input type="number" name="type_demandes_id" class="d-none" value="3" readonly>
         <div class="row">
             <div class="form-group col" id="dem_objet_g" style="margin-top: 15px;">
-                <label for="objet" style="font-weight: bold; color: #000000;">Objet</label><br>
+                <label for="objet" style="font-weight: bold; color: #000000;">Objet*</label><br>
                 <select id="selects" class="form-control form-control-sm dataOptions" name="dem_objet_id" required>
                     <option selected disabled>--- Choisissez l'objet de votre demande ---</option>
                     @foreach($dem_objets->whereNotNull('nombre_de_jour')->where('nombre_de_jour', '>=', 15) as $dem_objet_g)
@@ -27,7 +27,7 @@
         </div>
         <div class="row">
             <div class="form-group col" id="jour_conger" style="margin-top: 25px; display: none;">
-                <label for="numb_de_jours" style="font-weight: bold; color: #000000;">Nombres de jours souhaité</label><br>
+                <label for="numb_de_jours" style="font-weight: bold; color: #000000;">Nombres de jours souhaité*</label><br>
                 <select class="form-control form-control-sm dataOptions" id="nombre_de_jours" name="nombre_de_jours" required>
                     <option value="NULL" disabled>--- Choisissez le nombre de jour que vous souhaitez ---</option>
                     @for ($i = 1; $i <=($retVal = ($user->jour_de_conger>15) ? 15 : $user->jour_de_conger); $i++)
@@ -38,13 +38,13 @@
         </div>
         <div class="row">
             <div class="form-group col" style="margin-top: 25px;">
-                <label for="date_depart" style="font-weight: bold; color: #000000;">Date de départ</label><br>
+                <label for="date_depart" style="font-weight: bold; color: #000000;">Date de départ*</label><br>
                 <input class="form-control form-control-sm" type="date" id="date_depart" name="date_depart" required>
             </div>
         </div>
         <div class="row">
             <div class="form-group col" style="margin-top: 25px;">
-                <label for="date_fin" style="font-weight: bold; color: #000000;">Date de fin</label><br>
+                <label for="date_fin" style="font-weight: bold; color: #000000;">Date de fin*</label><br>
                 <input class="form-control form-control-sm" type="date" id="date_fin" name="date_fin" readonly>
             </div>
         </div>

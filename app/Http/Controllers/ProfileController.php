@@ -66,8 +66,8 @@ class ProfileController extends Controller
             'direction_id' => 'required|exists:directions,id',
             'filliale_id' => 'required|exists:filliales,id',
             'date_embauche' => 'required|date',
-            'isEmbauche' => 'required|in:0,1',
-            'role' => 'required|in:user,usercomptable,admin,superadmin'        
+            'isEmbauche' => 'required|int:2',
+            'role' => 'required|in:user,usercomptable,admin,superadmin'
         ]);
 
         $defaultPassword = 'password';
@@ -88,6 +88,7 @@ class ProfileController extends Controller
             'date_embauche' => $request->date_embauche,
             'directions_id' => $request->direction_id,
             'filliale_id' => $request->filliale_id,
+            'isEmbauche'=> $request->isEmbauche,
             'company_id' => 1,
             'jour_de_conger' => 30,
             'pays_id' => 1,
@@ -95,7 +96,7 @@ class ProfileController extends Controller
         ]);
 
         $user->assignRole($request->role);
-        
+
         // Envoi de l'e-mail à l'utilisateur
         (new SendEmailController())->NotificationCreateuser($user, $defaultPassword);
 
@@ -128,15 +129,15 @@ class ProfileController extends Controller
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
-    
+
     public function signature_update(Request $request)
     {
         // dd($request);
 
-        
+
         $path = 'Signature/';
 
-        if($file = $request->file('signture_numerique')) 
+        if($file = $request->file('signture_numerique'))
         {
             $fileData = ImageManager::uploads($file,$path);
             $document = signature::updateOrcreate(
@@ -146,7 +147,7 @@ class ProfileController extends Controller
                     'nom'=>'signture_numerique_'.auth()->user()->id.'_'.date('Y-m-d H:m:s'),
                     'chemin_doc'=>$fileData['filePath'],
                 ]
-                ); 
+                );
         }
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');

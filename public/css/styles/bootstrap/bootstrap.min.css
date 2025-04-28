@@ -5987,9 +5987,13 @@ textarea.form-control-lg {
     margin-right: 3rem !important;
     margin-left: 3rem !important
 }
+.mx-6{
+    margin-right: 3rem !important;
+    margin-left: 5rem !important
+}
 .mx-9{
     margin-right: 1rem !important;
-    margin-left: 35rem !important;
+    margin-left: 32rem !important;
 }
 .mx-auto {
     margin-right: auto !important;

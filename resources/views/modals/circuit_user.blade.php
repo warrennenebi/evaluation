@@ -14,7 +14,7 @@
 @section('content')
     <form id="circuit_user" method="POST">
         <div class="form-group" style="margin-top: 15px;">
-            <label for="user_id" style="font-weight: bold; color: #000000;">Utilisateur</label><br>
+            <label for="user_id" style="font-weight: bold; color: #000000;">Utilisateur*</label><br>
             <select name="user_id" id="user_id" class="form-control form-control-sm dataOptions" style="width: 460px;">
                 <option selected disabled>--- Choisissez l'utilisateur ---</option>
                 @foreach ($user as $users)

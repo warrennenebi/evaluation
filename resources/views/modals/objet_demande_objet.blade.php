@@ -14,7 +14,7 @@
 @section('content')
     <form id="objet_demande_objet" method="POST">
         <div class="form-group" style="margin-top: 15px;">
-            <label for="label" style="font-weight: bold; color: #000000;">Titre de l'objet</label><br>
+            <label for="label" style="font-weight: bold; color: #000000;">Titre de l'objet*</label><br>
             <input class="form-control form-control-sm" type="text" name="label" style="width: 460px;" required>
         </div>
         <div class="form-check">

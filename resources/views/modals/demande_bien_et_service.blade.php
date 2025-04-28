@@ -16,7 +16,7 @@
     <form id="demande_bien_service" method="POST" enctype="multipart/form-data">
         <input type="number" name="type_demandes_id" class="d-none" value="1" readonly>
         <div class="form-group" id="dem_objet_g" style="margin-top: 15px;">
-            <label for="objet" style="font-weight: bold; color: #000000;">Objet</label><br>
+            <label for="objet" style="font-weight: bold; color: #000000;">Objet*</label><br>
             <select id="select1" class="form-control form-control-sm dataOptions" name="dem_objet_id" style="width: 460px;" required>
                 <option selected disabled>--- Choisissez l'objet de votre demande ---</option>
                 @foreach($dem_objet_gs as $dem_objet_g)
@@ -30,11 +30,11 @@
         </div>
         <div class="row justify-content-around">
             <div class="form-group col-lg-6" style="margin-top: 15px;">
-                <label for="montant" style="font-weight: bold; color: #000000;">Montant de la Demande</label><br>
+                <label for="montant" style="font-weight: bold; color: #000000;">Montant de la Demande*</label><br>
                 <input class="form-control form-control-sm" type="text" name="montant_demande" style="width: 300px;" required>
             </div>
             <div class="form-group col-lg-6" style="margin-top: 15px;">
-                <label for="document" style="font-weight: bold; color: #000000;">Document justificatif</label><br>
+                <label for="document" style="font-weight: bold; color: #000000;">Document justificatif*</label><br>
                 <input class="form-control form-control-sm" type="file" name="document_justificatif" id="document_justificatif" style="width: 300px;" multiple required>
             </div>
         </div>

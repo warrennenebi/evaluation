@@ -7,8 +7,8 @@
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Payer</button>
-                </li>                
-            </ul>            
+                </li>
+            </ul>
         </div>    --}}
     </x-slot>
 
@@ -23,7 +23,7 @@
                     </h2>
                     <div id="flush-collapseOne{{$key}}" class="accordion-collapse collapse" aria-labelledby="flush-headingOne{{$key}}" data-bs-parent="#accordionFlushExample">
                         <div class="accordion-body">
-                            <h6>Cet espace sert à configurer le(s) elements de circuit de validation.</h6>
+                            <h6>Cet espace sert à configurer les elements de circuit de validation.</h6>
                             <div class="btn">
                                 <button class="btn btn-sn btn-primary" type="button" data-bs-toggle="modal" onclick="fopen ('modals/circuit_validateur.modalcircuit.show.PositionModal1','circuit/create')">Nouveau</button>
                             </div>
@@ -57,7 +57,7 @@
                     </h2>
                     <div id="flush-collapseOne{{$key}}" class="accordion-collapse collapse" aria-labelledby="flush-headingOne{{$key}}" data-bs-parent="#accordionFlushExample1">
                         <div class="accordion-body">
-                            <h6>Cet espace sert à configurer le(s) organes de validation.</h6>
+                            <h6>Cet espace sert à configurer les organes pour les imputations.</h6>
                             <div class="btn">
                                 <button class="btn btn-sn btn-primary" type="button" data-bs-toggle="modal" onclick="fopen ('modals/organe_validateur.modalorgane.show.PositionModal1','organe/create')">Nouveau</button>
                             </div>

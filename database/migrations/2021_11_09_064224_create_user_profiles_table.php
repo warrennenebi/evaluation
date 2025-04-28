@@ -20,6 +20,7 @@ class CreateUserProfilesTable extends Migration
             $table->string('ville')->nullable();
             $table->string('date_embauche')->nullable();
             $table->integer('jour_de_conger')->nullable();
+            $table->integer('isEmbauche')->nullable();
             $table->foreignId('directions_id')->contrained()->onDelect('cascade')->nullable();
             $table->foreignId('pays_id')->contrained()->onDelect('cascade')->nullable();
             $table->foreignId('filliale_id')->contrained()->onDelect('cascade')->nullable();

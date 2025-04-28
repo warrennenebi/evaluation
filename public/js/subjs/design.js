@@ -863,7 +863,7 @@ function format(d,tableRef=null) {
             +'<td class="py-2 text-center oneline align-middle">'
             +'<span role="button" data-bs-toggle="collapse" data-bs-target="#ObjetdemandeTable' + dem_objet_sgs.id + '" aria-expanded="false" aria-controls="ObjetdemandeTable' + dem_objet_sgs.id + '" title="Afficher plus" class="material-icons  mx-1">add_box</span>'
             +'</td>'
-            +'<td class="py-2 text-center oneline align-middle">'
+            +'<td class="py-2 oneline align-middle">'
             +dem_objet_sgs.label
             +'</td>'
             +'<td class="oneline py-2 text-center lh-0 align-middle">'
@@ -2003,7 +2003,7 @@ function applyDataTablesTo(toApplytable) {
                                 if ((row.demande !== null && typeof row.demande !== 'undefined') && (row.demande.motif_permi == null)) {
 
                                     if(row.demande.type_demandes_id==1)
-                                    { 
+                                    {
                                         row.demande.objetsg.forEach(element => {
                                             selectobjet+='<p class="rounded p-0 m-0">'+element.label+'</p>';
                                         });
@@ -2014,7 +2014,7 @@ function applyDataTablesTo(toApplytable) {
                                         row.demande.objets.forEach(element => {
                                             selectobjet+='<p class="rounded p-0 m-0">'+element.classes.label+'</p>';
                                         });
-                                        return selectobjet; 
+                                        return selectobjet;
                                     }
 
                                 }
@@ -2225,7 +2225,7 @@ function applyDataTablesTo(toApplytable) {
                         orderable: false,
                         data: null,
                         render: function ( data, type, row ) {
-                                return '<div class="d-flex align-items-center"><input type="checkbox" class="mx-1 checkname" id="'+ row.id +'"> <span role="button" data-ref="refTraitementDemandesTable0" title="Afficher plus" class="material-icons dt_control_expand mx-1">add_box</span></div>';
+                                return '<div class="d-flex align-items-center"><span role="button" data-ref="refTraitementDemandesTable0" title="Afficher plus" class="material-icons dt_control_expand mx-1">add_box</span></div>';
                         },
                     },
                     {
@@ -2289,7 +2289,6 @@ function applyDataTablesTo(toApplytable) {
 
                                     if(row.type_demandes_id==1)
                                     {
-                                    console.log('msg')
                                         row.objetsg.forEach(element => {
                                             selectobjet+='<p class="rounded p-0 m-0">'+element.label+'</p>';
                                         });
@@ -2387,7 +2386,7 @@ function applyDataTablesTo(toApplytable) {
                         orderable: false,
                         data: null,
                         render: function ( data, type, row ) {
-                                return '<div class="d-flex align-items-center"><input type="checkbox" class="mx-1 checkname" id="'+ row.id +'"> <span role="button" data-ref="refTraitementDemandesTable1" title="Afficher plus" class="material-icons dt_control_expand mx-1">add_box</span></div>';
+                                return '<div class="d-flex align-items-center"><span role="button" data-ref="refTraitementDemandesTable1" title="Afficher plus" class="material-icons dt_control_expand mx-1">add_box</span></div>';
                         },
                     },
                     {
@@ -2451,7 +2450,6 @@ function applyDataTablesTo(toApplytable) {
 
                                     if(row.type_demandes_id==1)
                                     {
-                                    console.log('msg')
                                         row.objetsg.forEach(element => {
                                             selectobjet+='<p class="rounded p-0 m-0">'+element.label+'</p>';
                                         });
@@ -2549,7 +2547,7 @@ function applyDataTablesTo(toApplytable) {
                         orderable: false,
                         data: null,
                         render: function ( data, type, row ) {
-                                return '<div class="d-flex align-items-center"><input type="checkbox" class="mx-1 checkname" id="'+ row.id +'"> <span role="button" data-ref="refTraitementDemandesTable2" title="Afficher plus" class="material-icons dt_control_expand mx-1">add_box</span></div>';
+                                return '<div class="d-flex align-items-center"><span role="button" data-ref="refTraitementDemandesTable2" title="Afficher plus" class="material-icons dt_control_expand mx-1">add_box</span></div>';
                         },
                     },
                     {
@@ -2613,7 +2611,6 @@ function applyDataTablesTo(toApplytable) {
 
                                     if(row.type_demandes_id==1)
                                     {
-                                    console.log('msg')
                                         row.objetsg.forEach(element => {
                                             selectobjet+='<p class="rounded p-0 m-0">'+element.label+'</p>';
                                         });
@@ -4325,7 +4322,7 @@ function applyDataTablesTo(toApplytable) {
                         },
                     },
                     {
-                        className: 'w-90 py-2 text-center align-middle',
+                        className: 'w-90 py-2 align-middle',
                         data: 'label',
                         render: function(data, type, row)
                         {

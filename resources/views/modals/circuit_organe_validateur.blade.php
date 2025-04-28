@@ -14,7 +14,7 @@
 @section('content')
     <form id="circuit_organe_validateur" method="POST">
         <div class="form-group" style="margin-top: 15px;">
-            <label for="label" style="font-weight: bold; color: #000000;">Libelle</label><br>
+            <label for="label" style="font-weight: bold; color: #000000;">Libelle*</label><br>
             <select name="circuit_organe_id" id="circuit_organe_id" class="form-control form-control-sm dataOptions" style="width: 460px;">
                 <option selected disabled>--- Choisissez le circuit de validation ---</option>
                 @foreach ($type as $circuit)

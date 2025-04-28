@@ -14,7 +14,7 @@
 @section('content')
     <form id="circuit_validateur" method="POST">
         <div class="form-group" style="margin-top: 15px;">
-            <label for="label" style="font-weight: bold; color: #000000;">Libelle</label><br>
+            <label for="label" style="font-weight: bold; color: #000000;">Libelle*</label><br>
             <select name="label" id="circuit_validateur_id" class="form-control form-control-sm dataOptions" style="width: 460px;">
                 <option selected>--- Choisissez le circuit de validation ---</option>
                 @foreach ($direction as $direc)
@@ -23,7 +23,7 @@
             </select>
         </div>
         <div class="form-group" style="margin-top: 15px;">
-            <label for="filliale_id" style="font-weight: bold; color: #000000;">Filliales</label><br>
+            <label for="filliale_id" style="font-weight: bold; color: #000000;">Filliales*</label><br>
             <select name="filliale_id" id="filliale_id" class="form-control form-control-sm dataOptions" style="width: 460px;">
                 <option selected disabled>--- Choisissez le lieu de service ---</option>
                 @foreach ($filliale as $fil)

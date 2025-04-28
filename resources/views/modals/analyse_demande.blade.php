@@ -14,7 +14,7 @@
 @section('content')
     <form id="traitement_demande">
         <div class="form-group">
-            <label for="avis" style="font-weight: bold; color: #000000;">Avis</label><br>
+            <label for="avis" style="font-weight: bold; color: #000000;">Avis*</label><br>
             <select name="statut" id="statut" class="form-control form-control-sm" style="width: 460px;" required>
                 <option value="1">Validée</option>
                 <option value="2">Réfusée</option>
@@ -23,7 +23,7 @@
         @can('payement')
             @if($demandes->contains(1))
                 <div class="form-group" id="modepayement">
-                    <label for="payement" style="font-weight: bold; color: #000000;">Methode de payement</label><br>
+                    <label for="payement" style="font-weight: bold; color: #000000;">Methode de payement*</label><br>
                     <select name="payement" id="payement" class="form-control form-control-sm dataOptions" style="width: 460px;" required>
                         <option selected disabled>--- Mode de payement ---</option>
                         <option value="1">Chèque</option>

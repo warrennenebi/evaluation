@@ -24,11 +24,6 @@ class UserProfile extends Model
         'filliale_id',
     ];
 
-    public function id()
-    {
-        return $this->belongsTo(hardware::class);
-    }
-
     public function filliale()
     {
         return $this->belongsTo(filliale::class);

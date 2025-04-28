@@ -18,7 +18,7 @@
         <input type="number" name="type_demandes_id" class="d-none" value="2" readonly>
         @if($user->isEmbauche != 0)
             <div class="form-group" id="dem_objet_g" style="margin-top: 15px;">
-                <label for="objet" style="font-weight: bold; color: #000000;">Objet</label><br>
+                <label for="objet" style="font-weight: bold; color: #000000;">Objet*</label><br>
                 <select id="selectpermission" class="form-control form-control-sm dataOptions" name="dem_objet_id" style="width: 460px;" required>
                     <option selected disabled>--- Choisissez le motif de votre permission ---</option>
                     @foreach($dem_objets->whereNotNull('nombre_de_jour')->where('nombre_de_jour', '<', 15)->where('nombre_de_jour', '!=' , 0) as $dem_objet_g)
@@ -28,7 +28,7 @@
             </div>
         @else
             <div class="form-group" style="margin-top: 15px;">
-                <label for="motif_permi" style="font-weight: bold; color: #000000;">Motif</label><br>
+                <label for="motif_permi" style="font-weight: bold; color: #000000;">Motif*</label><br>
                 <!-- L'input de type texte s'affiche si user->isembauche est égal à zéro -->
                 <input type="text" id="motif_permi" name="motif_permi" class="form-control form-control-sm" style="width: 460px;" required>
             </div>
@@ -37,15 +37,15 @@
             <p id="selectedPermissionMessage"></p>
         </div>
         <div class="form-group" style="margin-top: 25px;">
-            <label for="date_depart" style="font-weight: bold; color: #000000;">Date de départ</label><br>
+            <label for="date_depart" style="font-weight: bold; color: #000000;">Date de départ*</label><br>
             <input class="form-control form-control-sm" type="date" id="date_depart" name="date_depart" style="width: 460px;" required>
         </div>
         <div class="form-group" style="margin-top: 25px;">
-            <label for="date_fin" style="font-weight: bold; color: #000000;">Date de fin</label><br>
+            <label for="date_fin" style="font-weight: bold; color: #000000;">Date de fin*</label><br>
             <input class="form-control form-control-sm" type="date" id="date_fin2" name="date_fin" style="width: 460px;" required readonly>
         </div>
         <div class="form-group" style="margin-top: 15px;">
-            <label for="document" style="font-weight: bold; color: #000000;">Document justificatif</label><br>
+            <label for="document" style="font-weight: bold; color: #000000;">Document justificatif*</label><br>
             <input class="form-control form-control-sm" type="file" name="document_justificatif" id="document_justificatif" style="width: 460px;" multiple required>
         </div>
         <div class="form-group" style="margin-top: 25px;">
