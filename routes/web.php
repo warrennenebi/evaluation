@@ -21,7 +21,7 @@ use App\Http\Controllers\RoleController;
 */
 
 Route::get('/', function () {
-    return view('auth/login');
+    return view('pages/accueil');
 });
 
 Route::get('/tables', [DemandeController::class, 'getTables'])->name("api.getTable");
@@ -30,7 +30,7 @@ Route::get('/dashboard', function () {
     return view('dashboard');})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::middleware(['role:user|usercomptable|admin'])->group(function () {
+    Route::middleware(['role:user|usercomptable|admin|superadmin'])->group(function () {
         Route::get('/change-password', [ProfileController::class, 'showChangePasswordForm'])->name('change-password');
         Route::post('/update-password', [ProfileController::class, 'updatePassword'])->name('update-password');
 
