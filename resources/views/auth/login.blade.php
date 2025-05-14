@@ -13,15 +13,15 @@
     <div class="w-100" style="flex: 7">
         <div class="col-lg-6">
         </div>
-        <div class="col-lg-6 py-9 mx-9 d-flex flex-column">
-            <div class="w-100 justify-content-end align-items-center p-3" style="flex: 0.6;">
-                <img src="{{ asset('img/logo1.png')}}" class="mx-6 img-fluid w-60 rounded-circle" alt="...">
-                <div class="col-lg-12 p-3">
+        <div class="col-lg-6 py-9 mx-9">
+            <div class="w-100  d-flex align-items-center align-content-stretch justify-content-evenly flex-wrap flex-column p-3">
+                <img src="{{ asset('img/logo1.png')}}" class="img-fluid w-60 rounded-circle" alt="...">
+                <div class="col-lg-7 p-3">
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
-                        <div class="justify-content-center align-items-center" id="collapseWidthlog">
+                        <div id="collapseWidthlog">
                             <!-- Email Address -->
-                            <div class="col-lg-6">
+                            <div class="col-11">
                                 <div class="row mb-2">
                                     <input id="username"  class="form-control fs-5" placeholder="Nom" type="text" name="username" :value="old('username')" required autofocus>
                                 </div>
